@@ -4,7 +4,15 @@ TODO:
 - Add rating for songs 1-5 > need to pull songs from JSON first
 - Log how many times each song have been played
 - Add shuffle option
-- Add repeat option
+- Add repeat option for song & playlist
+*/
+
+/* 
+
+Project TODO:
+- Fork the initial repo
+- Contribute to initial repo
+- Write documentation for the changes made
 */
 
 let track_art = document.querySelector(".track-art");
@@ -77,6 +85,7 @@ function random_bg_color() {
         - change function name from random_bg_color() to setBgColorByPicture()
         - Parse the dominant color of the pic
         - set dominant color as background color
+        https://lokeshdhakar.com/projects/color-thief/
         */
 
   // Get a number between 64 to 256 (for getting lighter colors)
@@ -188,7 +197,14 @@ function nextTrack() {
   loadTrack(track_index);
   playTrack();
 }
-
+function prevTrack() {
+  if (track_index > 0) track_index -= 1;
+  else track_index = track_list.length;
+  //   trackList.children[track_index].classList.add('active');
+  //   trackList.children[nowPlaying].classList.remove('active');
+  loadTrack(track_index);
+  playTrack();
+}
 function playFromList(event) {
   // Check if the clicked element is an <li> element
   if (event.target.tagName.toLowerCase() === "li") {
@@ -213,14 +229,7 @@ function playFromList(event) {
 // Add the event listener to the trackList element
 trackList.addEventListener("click", playFromList);
 
-function prevTrack() {
-  if (track_index > 0) track_index -= 1;
-  else track_index = track_list.length;
-  //   trackList.children[track_index].classList.add('active');
-  //   trackList.children[nowPlaying].classList.remove('active');
-  loadTrack(track_index);
-  playTrack();
-}
+
 
 function seekTo() {
   let seekto = curr_track.duration * (seek_slider.value / 100);
