@@ -3,6 +3,8 @@ body {
   
     /* Smoothly transition the background color */
     transition: background-color 0.5s;
+    font-family: "Roboto Slab", serif;
+    font-optical-sizing: auto;
   }
   
   .player {
@@ -21,13 +23,19 @@ body {
     margin-top: 25px;
   }
   
-  .track-art {
+  .track-art-container {
     margin: 25px;
     height: 250px;
     width: 250px;
-    background-image: url("https://images.pexels.com/photos/262034/pexels-photo-262034.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260");
+    /* background-image: url("https://images.pexels.com/photos/262034/pexels-photo-262034.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"); */
     background-size: cover;
     border-radius: 15%;
+  }
+
+  .track-art-container > img {
+    width: 100%; 
+    height: 100%;
+    object-fit: cover; 
   }
   
   .now-playing {
@@ -150,14 +158,19 @@ body {
   
   li.track-item div {
     margin-left: 20px;
+    color:rgb(218, 218, 218)
+  }
+
+  li.track-item div>h3 {
+    font-weight: 400;
   }
   
   li.track-item p {
     margin: 0;
   }
   .active {
-    background: red;
-    opacity: 0.75;
+    background: rgba(28, 39, 37, 0.174);
+    opacity: 0.90;
   }
   
   #playlist-scroll {
@@ -171,5 +184,17 @@ body {
   .bi-hand-thumbs-up:hover::before {
     content: "\F406";
   }
+
   
-  
+  .shuffle-button {
+    cursor: pointer; /* Make it look clickable */
+}
+.shuffle-icon {
+    /* Add any desired styling for the icon */
+}
+.shuffleActive {
+    color: #1DB954; /* Example active color (Spotify green) */
+}
+.shuffleInactive {
+    color: #999;    /* Example inactive color */
+}

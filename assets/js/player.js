@@ -1,6 +1,6 @@
+import ColorThief from "../../node_modules/colorthief/dist/color-thief.mjs";
 
-
-let track_art = document.querySelector(".track-art");
+let track_art = document.getElementById("track-art");
 let track_name = document.querySelector(".track-name");
 let track_artist = document.querySelector(".track-artist");
 let now_playing = document.querySelector(".now-playing");
@@ -29,7 +29,6 @@ let updateTimer;
 
 // Create new audio element
 let curr_track = document.createElement("audio");
-
 
 //create an array of track objects
 let track_list = [
@@ -88,11 +87,7 @@ function generatePlaylist() {
   }
 }
 
-
-
 function random_bg_color() {
- 
-
   // Get a number between 64 to 256 (for getting lighter colors)
   let red = Math.floor(Math.random() * 256) + 64;
   let green = Math.floor(Math.random() * 256) + 64;
@@ -105,6 +100,40 @@ function random_bg_color() {
   document.body.style.background = bgColor;
 }
 
+function generateGradientString(colors) {
+  const randomAngle = Math.floor(Math.random() * 181);
+
+  let gradientString = `linear-gradient(${randomAngle + "deg"}, `; // Change "to right" for a different direction
+  for (let i = 0; i < colors.length; i++) {
+    const rgbString = `rgb(${colors[i][0]}, ${colors[i][1]}, ${colors[i][2]})`;
+    gradientString += rgbString;
+    if (i < colors.length - 1) {
+      gradientString += ", ";
+    }
+  }
+  gradientString += ")";
+  return gradientString;
+}
+
+let colorArray;
+
+const colorThief = new ColorThief();
+
+const shuffleButton = document.querySelector(".shuffle-button");
+const shuffleIcon = document.querySelector(".shuffle-icon");
+let isShuffle = false; // Initial shuffle state
+
+shuffleButton.addEventListener("click", () => {
+  isShuffle = !isShuffle; // Toggle the shuffle state
+
+  if (isShuffle) {
+    shuffleIcon.classList.add("shuffleActive");
+    // Add your logic to shuffle the playlist here
+  } else {
+    shuffleIcon.classList.remove("shuffleActive");
+    // Add your logic to return to normal playback here
+  }
+});
 function loadTrack(track_index) {
   clearInterval(updateTimer);
   resetValues();
@@ -117,29 +146,34 @@ function loadTrack(track_index) {
   trackList.children[nowPlaying].classList.remove("active");
   nowPlaying = track_index;
 
-  track_art.style.backgroundImage = `url(${track_list[track_index].image})`;
+  track_art.src = `${track_list[track_index].image}`;
   track_name.textContent = track_list[track_index].name;
   track_artist.textContent = track_list[track_index].artist;
   now_playing.textContent =
     "PLAYING " + (track_index + 1) + " OF " + track_list.length;
 
-    if (track_art.complete) {
-      console.log("yuklendi");
-      colorArray = colorThief.getPalette(track_art);
-      console.log(colorArray[0]);
-    } else {
-      console.log("yuklenemedi");
-  
-      track_art.addEventListener("load", function () {
-        console.log("ahan da oldu");
-  
-        colorThief.getPalette(track_art);
-      });
-    }
-
   updateTimer = setInterval(seekUpdate, 1000);
-  curr_track.addEventListener("ended", nextTrack);
-  random_bg_color();
+  curr_track.addEventListener("ended", () => {
+    if (isShuffle) {
+      console.log("shuffle on");
+      const randomSong = Math.floor(Math.random() * track_list.length -1);
+      loadTrack(randomSong);
+    } else {
+      console.log("shuffle off");
+      nextTrack();
+    }
+  });
+
+  if (track_art.complete) {
+    colorArray = colorThief.getPalette(track_art);
+  } else {
+    track_art.addEventListener("load", function () {
+      colorArray = colorThief.getPalette(track_art);
+      generateGradientString(colorArray);
+      const gradient = generateGradientString(colorArray);
+      document.body.style.background = gradient;
+    });
+  }
 }
 
 function resetValues() {
@@ -188,18 +222,22 @@ function playFromList(event) {
   if (event.target.tagName.toLowerCase() === "li") {
     // Get the index of the clicked list item
     let clickedIndex = Array.from(trackList.children).indexOf(event.target);
-
-    // Update the track_index and load the new track
-    track_index = clickedIndex;
-    loadTrack(track_index);
-    playTrack();
-
-    // Add the 'active' class to the clicked list item
+    if (clickedIndex == track_index) {
+      return false;
+    } else {
+      // Update the track_index and load the new track
+      track_index = clickedIndex;
+      loadTrack(track_index);
+      playTrack();
+      // Add the 'active' class to the clicked list item
     // and remove it from the previously active item
     trackList.querySelector(".active")?.classList.remove("active");
     //FIXME: adding class is already handled in loadTrack
     //why does it not work when I comment out the below line?
     event.target.classList.add("active");
+    }
+
+    
   }
 }
 
@@ -259,3 +297,5 @@ document.querySelector(".seek_slider").addEventListener("change", seekTo);
 document.querySelector(".volume_slider").addEventListener("change", setVolume);
 trackList.addEventListener("click", playFromList);
 loadTrack(track_index);
+
+export { track_art as trackArt };
