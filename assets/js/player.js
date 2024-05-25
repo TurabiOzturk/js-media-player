@@ -9,7 +9,6 @@ let now_playing = document.querySelector(".now-playing");
 //experimental
 
 const trackList = document.getElementById("track-list");
-//const listItems = trackList.querySelectorAll("li");
 
 let isPlayListGenerated = false;
 let nowPlaying;
@@ -27,6 +26,8 @@ let total_duration = document.querySelector(".total-duration");
 let track_index = 0;
 let isPlaying = false;
 let updateTimer;
+let colorArray;
+
 
 // Create new audio element
 let curr_track = document.createElement("audio");
@@ -118,7 +119,6 @@ function generateGradientString(colors) {
   return gradientString;
 }
 
-let colorArray;
 
 const colorThief = new ColorThief();
 
