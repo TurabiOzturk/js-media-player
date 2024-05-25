@@ -1,4 +1,5 @@
-import ColorThief from "../../node_modules/colorthief/dist/color-thief.mjs";
+// import ColorThief from "../../node_modules/colorthief/dist/color-thief.mjs";
+import ColorThief from "colorthief";
 
 let track_art = document.getElementById("track-art");
 let track_name = document.querySelector(".track-name");
@@ -42,13 +43,14 @@ let track_list = [
   {
     name: "Deneme",
     artist: "Turabi Ozturk",
-    image: "assets/tracks/track-art/track_art_deneme.avif",
+    image: "assets/tracks/track-art/123.avif",
+    // image: "assets/tracks/track-art/track_art_deneme.avif",
     path: "assets/tracks/track-file/deneme.mp3",
     rating: 0,
   },
   {
     name: "Existential Dread",
-    image: "assets/tracks/track-art/track_art_existential_dread.avif",
+    image: "assets/tracks/track-art/araba.avif",
     artist: "Turabi Ozturk",
     path: "assets/tracks/track-file/existential_dread.mp3",
     rating: 0,
@@ -87,6 +89,7 @@ function generatePlaylist() {
   }
 }
 
+// obsolete
 function random_bg_color() {
   // Get a number between 64 to 256 (for getting lighter colors)
   let red = Math.floor(Math.random() * 256) + 64;
@@ -163,7 +166,7 @@ function loadTrack(track_index) {
       nextTrack();
     }
   });
-
+  
   if (track_art.complete) {
     colorArray = colorThief.getPalette(track_art);
   } else {
@@ -171,10 +174,19 @@ function loadTrack(track_index) {
       colorArray = colorThief.getPalette(track_art);
       generateGradientString(colorArray);
       const gradient = generateGradientString(colorArray);
-      document.body.style.background = gradient;
+      document.body.style.cssText = `
+      background: ${gradient}; 
+      `;
     });
   }
 }
+
+// document.body.style.cssText = `
+//   background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+//   background-size: 400% 400%;
+//   animation: gradient 15s ease infinite;
+//   height: 100vh;
+// `;
 
 function resetValues() {
   curr_time.textContent = "00:00";
@@ -213,7 +225,7 @@ function nextTrack() {
 }
 function prevTrack() {
   if (track_index > 0) track_index -= 1;
-  else track_index = track_list.length;
+  else track_index = track_list.length - 1;
   loadTrack(track_index);
   playTrack();
 }

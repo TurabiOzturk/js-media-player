@@ -1,10 +1,12 @@
-document.querySelector('#app').innerHTML = `
+document.querySelector("#app").innerHTML = `
 
 
 <div class="player">
 <div class="details">
   <div class="now-playing">PLAYING x OF y</div>
-  <div class="track-art"></div>
+  <div class="track-art-container">
+  <img class="target-image" id="track-art" src="">  
+  </div>
   <div class="track-name">Track Name</div>
   <div class="track-artist">Track Artist</div>
 </div>
@@ -45,6 +47,10 @@ document.querySelector('#app').innerHTML = `
  make any changes -->
   <i class="bi bi-hand-thumbs-up"></i>
   <i class="bi bi-hand-thumbs-down"></i>
+  <div class="shuffle-button">
+    <i class="fas fa-random shuffle-icon"></i>
+</div>
+
   <!-- <i class="bi bi-hand-thumbs-up-fill"></i>
   <i class="bi bi-hand-thumbs-down-fill"></i> -->
 </div>
@@ -58,4 +64,4 @@ document.querySelector('#app').innerHTML = `
   </div>
 </div>
 </div>
-`
+`;

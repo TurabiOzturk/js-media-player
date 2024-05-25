@@ -2,17 +2,15 @@ Todo:
 
 
 TODO:
+
+- Add shuffle option
 - Change variable names from snake_case to camelCase
 - Add rating for songs 1-5 > need to pull songs from JSON first
 - Log how many times each song have been played
-- Add shuffle option
 - Add repeat option for song & playlist
 - fix loadTrack, prevTrack and nextTrack sync issues.
 - Browse different playlists.
     - load different playlists.
-- Parse the dominant color of the pic
-    - change function name from random_bg_color() to setBgColorByPicture()
-    - set dominant color as background color using colorThief
 - generatePlaylist error handling in else case
 
 
@@ -27,6 +25,10 @@ DONE:
 - show playlist on the screen ✅
 - Make list scrollable ✅
 - Change the current track when a song from list getting clicked ✅
+- Parse the dominant color of the pic ✅
+    - set dominant color as background color using colorThief ✅
+    
+
 
 
 
