@@ -1,92 +1,51 @@
+//two simple linting rules:
+// snake_case for CSS selector variables
+// camelCase for everything else
+
 // import ColorThief from "../../node_modules/colorthief/dist/color-thief.mjs";
 import ColorThief from "colorthief";
-
-let track_art = document.getElementById("track-art");
-let track_name = document.querySelector(".track-name");
-let track_artist = document.querySelector(".track-artist");
-let now_playing = document.querySelector(".now-playing");
-
-//experimental
-
-const trackList = document.getElementById("track-list");
+import { trackObject } from "./track_object";
+import { selector } from "./selectors";
 
 let isPlayListGenerated = false;
 let nowPlaying;
-//experimental
 
-let playpause_btn = document.querySelector(".playpause-track");
-let next_btn = document.querySelector(".next-track");
-let prev_btn = document.querySelector(".prev-track");
-
-let seek_slider = document.querySelector(".seek_slider");
-let volume_slider = document.querySelector(".volume_slider");
-let curr_time = document.querySelector(".current-time");
-let total_duration = document.querySelector(".total-duration");
-
-let track_index = 0;
+let trackIndex = 0;
 let isPlaying = false;
 let updateTimer;
 let colorArray;
-
-
-// Create new audio element
-let curr_track = document.createElement("audio");
-
-//create an array of track objects
-let track_list = [
-  {
-    name: "Dang Feels",
-    artist: "Turabi Ozturk",
-    image: "assets/tracks/track-art/track_art_dang_feels.avif",
-    path: "assets/tracks/track-file/dang_feels.mp3",
-    rating: 0,
-  },
-  {
-    name: "Deneme",
-    artist: "Turabi Ozturk",
-    image: "assets/tracks/track-art/123.avif",
-    // image: "assets/tracks/track-art/track_art_deneme.avif",
-    path: "assets/tracks/track-file/deneme.mp3",
-    rating: 0,
-  },
-  {
-    name: "Existential Dread",
-    image: "assets/tracks/track-art/araba.avif",
-    artist: "Turabi Ozturk",
-    path: "assets/tracks/track-file/existential_dread.mp3",
-    rating: 0,
-  },
-];
+let isSpaceBarCooldown = false;
 
 function generatePlaylist() {
   if (isPlayListGenerated !== true) {
-    for (let i = 0; i < track_list.length; i++) {
+    for (let i = 0; i < trackObject.length; i++) {
       nowPlaying = i;
-      const trackItem = track_list[i];
+      const trackItem = trackObject[i];
       const listItem = document.createElement("li");
       const listDiv = document.createElement("div");
       listItem.classList.add("track-item");
-      //listItem.setAttribute("onclick", "playFromList()");
 
       const trackTitle = document.createElement("h3");
       trackTitle.textContent = trackItem.name;
       const trackArtist = document.createElement("p");
-      trackArtist.textContent = `by ${trackItem.artist}`;
+      trackArtist.innerHTML = trackItem.artist;
       const trackImage = document.createElement("img");
       trackImage.src = trackItem.image;
 
       // Append elements to the list item
-      listItem.appendChild(trackImage);
-      listItem.appendChild(listDiv);
-      listDiv.appendChild(trackTitle);
-      listDiv.appendChild(trackArtist);
+      listItem.append(trackImage, listDiv);
+      // listItem.appendChild(trackImage);
+      // listItem.appendChild(listDiv);
+      listDiv.append(trackTitle, trackArtist);
+      // listDiv.appendChild(trackTitle);
+      // listDiv.appendChild(trackArtist);
 
       // Append the list item to the track list element
-      trackList.appendChild(listItem);
+      selector.track_list.appendChild(listItem);
       isPlayListGenerated = true;
     }
   } else {
-    //console.log("There is already a tracklist of " +track_list.length+ " songs!");
+    //console.log("There is already a trackObject of " +track_list.length+ " songs!");
   }
 }
 
@@ -119,7 +78,6 @@ function generateGradientString(colors) {
   return gradientString;
 }
 
-
 const colorThief = new ColorThief();
 
 const shuffleButton = document.querySelector(".shuffle-button");
@@ -137,41 +95,41 @@ shuffleButton.addEventListener("click", () => {
     // Add your logic to return to normal playback here
   }
 });
-function loadTrack(track_index) {
+function loadTrack(trackIndex) {
   clearInterval(updateTimer);
   resetValues();
   generatePlaylist();
 
-  curr_track.src = track_list[track_index].path;
-  curr_track.load();
+  selector.curr_track.src = trackObject[trackIndex].path;
+  selector.curr_track.load();
 
-  trackList.children[track_index].classList.add("active");
-  trackList.children[nowPlaying].classList.remove("active");
-  nowPlaying = track_index;
+  selector.track_list.children[trackIndex].classList.add("active");
+  selector.track_list.children[nowPlaying].classList.remove("active");
+  nowPlaying = trackIndex;
 
-  track_art.src = `${track_list[track_index].image}`;
-  track_name.textContent = track_list[track_index].name;
-  track_artist.textContent = track_list[track_index].artist;
-  now_playing.textContent =
-    "PLAYING " + (track_index + 1) + " OF " + track_list.length;
+  selector.track_art.src = `${trackObject[trackIndex].image}`;
+  selector.track_name.textContent = trackObject[trackIndex].name;
+  selector.track_artist.textContent = trackObject[trackIndex].artist;
+  selector.now_playing.textContent =
+    "PLAYING " + (trackIndex + 1) + " OF " + trackObject.length;
 
   updateTimer = setInterval(seekUpdate, 1000);
-  curr_track.addEventListener("ended", () => {
-    if (isShuffle) {
-      console.log("shuffle on");
-      const randomSong = Math.floor(Math.random() * track_list.length -1);
-      loadTrack(randomSong);
-    } else {
-      console.log("shuffle off");
-      nextTrack();
-    }
-  });
-  
-  if (track_art.complete) {
-    colorArray = colorThief.getPalette(track_art);
+  // selector.curr_track.addEventListener("ended", () => {
+  //   if (isShuffle) {
+  //     console.log("shuffle on");
+  //     const randomSong = Math.floor(Math.random() * trackObject.length -1);
+  //     loadTrack(randomSong);
+  //   } else {
+  //     console.log("shuffle off");
+  //     nextTrack();
+  //   }
+  // });
+
+  if (selector.track_art.complete) {
+    colorArray = colorThief.getPalette(selector.track_art);
   } else {
-    track_art.addEventListener("load", function () {
-      colorArray = colorThief.getPalette(track_art);
+    selector.track_art.addEventListener("load", function () {
+      colorArray = colorThief.getPalette(selector.track_art);
       generateGradientString(colorArray);
       const gradient = generateGradientString(colorArray);
       document.body.style.cssText = `
@@ -181,17 +139,10 @@ function loadTrack(track_index) {
   }
 }
 
-// document.body.style.cssText = `
-//   background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-//   background-size: 400% 400%;
-//   animation: gradient 15s ease infinite;
-//   height: 100vh;
-// `;
-
 function resetValues() {
-  curr_time.textContent = "00:00";
-  total_duration.textContent = "00:00";
-  seek_slider.value = 0;
+  selector.curr_time.textContent = "00:00";
+  selector.total_duration.textContent = "00:00";
+  selector.seek_slider.value = 0;
 }
 
 function playpauseTrack() {
@@ -200,86 +151,94 @@ function playpauseTrack() {
 }
 
 function playTrack() {
-  curr_track.play();
+  selector.curr_track.play();
   isPlaying = true;
-  playpause_btn.innerHTML = '<i class="fa fa-pause-circle fa-5x"></i>';
+  selector.playpause_btn.innerHTML = '<i class="fa fa-pause-circle fa-5x"></i>';
 }
 
 function pauseTrack() {
-  curr_track.pause();
+  selector.curr_track.pause();
   isPlaying = false;
-  playpause_btn.innerHTML = '<i class="fa fa-play-circle fa-5x"></i>';
+  selector.playpause_btn.innerHTML = '<i class="fa fa-play-circle fa-5x"></i>';
 }
 
 function nextTrack() {
-  if (track_index < track_list.length - 1) {
-    track_index += 1;
+  if (trackIndex < trackObject.length - 1) {
+    trackIndex += 1;
   } else {
-    track_index = 0;
+    trackIndex = 0;
   }
-  //   trackList.children[track_index].classList.add('active');
-  //   trackList.children[nowPlaying].classList.remove('active');
+  //   trackObject.children[trackIndex].classList.add('active');
+  //   trackObject.children[nowPlaying].classList.remove('active');
 
-  loadTrack(track_index);
+  loadTrack(trackIndex);
   playTrack();
 }
 function prevTrack() {
-  if (track_index > 0) track_index -= 1;
-  else track_index = track_list.length - 1;
-  loadTrack(track_index);
+  if (
+    selector.curr_track.currentTime > 5 &&
+    selector.curr_track.currentTime < 10
+  ) {
+    console.log("somewhere between 5 to 10");
+  } else {
+    console.log("somewhere else");
+    //DIS NOT WORKEN
+    if (trackIndex > 0) trackIndex -= 1;
+    else trackIndex = trackObject.length - 1;
+  }
+  loadTrack(trackIndex);
   playTrack();
 }
 function playFromList(event) {
   // Check if the clicked element is an <li> element
   if (event.target.tagName.toLowerCase() === "li") {
     // Get the index of the clicked list item
-    let clickedIndex = Array.from(trackList.children).indexOf(event.target);
-    if (clickedIndex == track_index) {
+    let clickedIndex = Array.from(trackObject.children).indexOf(event.target);
+    if (clickedIndex == trackIndex) {
       return false;
     } else {
-      // Update the track_index and load the new track
-      track_index = clickedIndex;
-      loadTrack(track_index);
+      // Update the trackIndex and load the new track
+      trackIndex = clickedIndex;
+      loadTrack(trackIndex);
       playTrack();
       // Add the 'active' class to the clicked list item
-    // and remove it from the previously active item
-    trackList.querySelector(".active")?.classList.remove("active");
-    //FIXME: adding class is already handled in loadTrack
-    //why does it not work when I comment out the below line?
-    event.target.classList.add("active");
+      // and remove it from the previously active item
+      trackObject.querySelector(".active")?.classList.remove("active");
+      //FIXME: adding class is already handled in loadTrack
+      //why does it not work when I comment out the below line?
+      event.target.classList.add("active");
     }
-
-    
   }
 }
 
-// Add the event listener to the trackList element
-trackList.addEventListener("click", playFromList);
+// Add the event listener to the trackObject element
 
 function seekTo() {
-  let seekto = curr_track.duration * (seek_slider.value / 100);
-  curr_track.currentTime = seekto;
+  let seekto =
+    selector.curr_track.duration * (selector.seek_slider.value / 100);
+  selector.curr_track.currentTime = seekto;
 }
 
 function setVolume() {
-  curr_track.volume = volume_slider.value / 100;
+  selector.curr_track.volume = selector.volume_slider.value / 100;
 }
 
 function seekUpdate() {
   let seekPosition = 0;
 
-  if (!isNaN(curr_track.duration)) {
-    seekPosition = curr_track.currentTime * (100 / curr_track.duration);
+  if (!isNaN(selector.curr_track.duration)) {
+    seekPosition =
+      selector.curr_track.currentTime * (100 / selector.curr_track.duration);
 
-    seek_slider.value = seekPosition;
+    selector.seek_slider.value = seekPosition;
 
-    let currentMinutes = Math.floor(curr_track.currentTime / 60);
+    let currentMinutes = Math.floor(selector.curr_track.currentTime / 60);
     let currentSeconds = Math.floor(
-      curr_track.currentTime - currentMinutes * 60
+      selector.curr_track.currentTime - currentMinutes * 60
     );
-    let durationMinutes = Math.floor(curr_track.duration / 60);
+    let durationMinutes = Math.floor(selector.curr_track.duration / 60);
     let durationSeconds = Math.floor(
-      curr_track.duration - durationMinutes * 60
+      selector.curr_track.duration - durationMinutes * 60
     );
 
     if (currentSeconds < 10) {
@@ -295,19 +254,42 @@ function seekUpdate() {
       durationMinutes = "0" + durationMinutes;
     }
 
-    curr_time.textContent = currentMinutes + ":" + currentSeconds;
-    total_duration.textContent = durationMinutes + ":" + durationSeconds;
+    selector.curr_time.textContent = currentMinutes + ":" + currentSeconds;
+    selector.total_duration.textContent =
+      durationMinutes + ":" + durationSeconds;
   }
 }
 
-document
-  .querySelector(".playpause-track")
-  .addEventListener("click", playpauseTrack);
-document.querySelector(".next-track").addEventListener("click", nextTrack);
-document.querySelector(".prev-track").addEventListener("click", prevTrack);
-document.querySelector(".seek_slider").addEventListener("change", seekTo);
-document.querySelector(".volume_slider").addEventListener("change", setVolume);
-trackList.addEventListener("click", playFromList);
-loadTrack(track_index);
+ 
+//play/pause with the space bar
+document.addEventListener("keydown", (event) => {
+  
+  if (
+    (event.key === " " || event.keyCode === 32) &&
+    !["INPUT", "TEXTAREA"].includes(document.activeElement.tagName)
+  ) {
+    event.preventDefault(); // Prevent page scrolling
 
-export { track_art as trackArt };
+    if (!isSpaceBarCooldown) {
+      //Only trigger this once per spacebar press.
+      isSpaceBarCooldown = true; // Set cooldown while key is down
+      playpauseTrack();
+    }
+  }
+});
+
+document.addEventListener("keyup", (event) => {
+  if (event.key === " " || event.keyCode === 32) {
+    isSpaceBarCooldown = false; // Reset cooldown when key is released
+  }
+});
+
+selector.playpause_btn.addEventListener("click", playpauseTrack);
+selector.next_btn.addEventListener("click", nextTrack);
+selector.prev_btn.addEventListener("click", prevTrack);
+selector.seek_slider.addEventListener("change", seekTo);
+selector.volume_slider.addEventListener("change", setVolume);
+selector.track_list.addEventListener("click", playFromList);
+selector.curr_track.addEventListener("ended", nextTrack);
+
+loadTrack(trackIndex);

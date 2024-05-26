@@ -7,6 +7,7 @@ A simple media player application built with HTML, CSS, and JavaScript, using Vi
 - Play, pause, and skip through a playlist of audio tracks
 - Ability to click on a track in the playlist to play that specific track
 - The background animates based on current track art's color palette.
+- User can play/pause the track by hitting the space button.
 
 ## Features to Implement
 

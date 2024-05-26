@@ -12,6 +12,12 @@ TODO:
 - Browse different playlists.
     - load different playlists.
 - generatePlaylist error handling in else case
+- List has blind spots when clicking
+- update .gitignore > > .txt 
+- onload background showing weird
+- Mute/unmute
+- Reset track if current seconds is > 3 
+- play/pause with space button
 
 
 Project TODO:
@@ -32,3 +38,8 @@ DONE:
 
 
 
+Look into:
+
+- using runner.js to run the initial starting functions as an entry point to the app.
+- Variables wildcard export logic
+- exposing modules as .umd.js > > ??

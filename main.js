@@ -25,7 +25,7 @@ document.querySelector("#app").innerHTML = `
   <div class="current-time">00:00</div>
   <input
     type="range"
-    min="1"
+    min="0"
     max="100"
     value="0"
     class="seek_slider"
@@ -36,7 +36,7 @@ document.querySelector("#app").innerHTML = `
   <i class="fa fa-volume-down"></i>
   <input
     type="range"
-    min="1"
+    min="0"f
     max="100"
     value="99"
     class="volume_slider"
