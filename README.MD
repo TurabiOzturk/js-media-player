@@ -8,13 +8,14 @@ A simple media player application built with HTML, CSS, and JavaScript, using Vi
 - Ability to click on a track in the playlist to play that specific track
 - The background animates based on current track art's color palette.
 - User can play/pause the track by hitting the space button.
+- Shuffle option to play tracks in random order
+
 
 ## Features to Implement
 
 - Songs will be stored in a JSON file, acting as a database
 - Frontend for thumbs up/down functionality will be made functional to rate tracks (ratings will be saved persistently in a JSON file that will act like a database)
 - Counter to display the number of times each song has been played (play counts will be saved persistently in the JSON file)
-- Shuffle option to play tracks in random order
 - Repeat option to continuously play the playlist/song on loop
 - Users will be able to create new playlists from the available songs in the JSON file through enhanced UX
 - Track data loading and unloading will be handled asynchronously

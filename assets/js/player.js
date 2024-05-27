@@ -69,6 +69,7 @@ function changeBackground() {
     colorArray = colorThief.getPalette(selector.track_art);
   } else {
     selector.track_art.addEventListener("load", function () {
+      console.log('yuklendi moruk');
       colorArray = colorThief.getPalette(selector.track_art);
       generateGradientString(colorArray);
       const gradient = generateGradientString(colorArray);
@@ -97,6 +98,7 @@ function loadTrack(trackIndex) {
     "PLAYING " + (trackIndex + 1) + " OF " + trackObject.length;
 
   updateTimer = setInterval(seekUpdate, 1000);
+  
   changeBackground();
 }
 
@@ -146,7 +148,6 @@ function nextTrack() {
       trackIndex = 0;
     }
   }
-  console.log(trackIndex);
   loadTrack(trackIndex);
   playTrack();
 }

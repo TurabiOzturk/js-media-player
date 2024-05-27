@@ -5,7 +5,7 @@ document.querySelector("#app").innerHTML = `
 <div class="details">
   <div class="now-playing">PLAYING x OF y</div>
   <div class="track-art-container">
-  <img class="target-image" id="track-art" src="">  
+  <img class="target-image" id="track-art" src="" crossorigin="anonymous">  
   </div>
   <div class="track-name">Track Name</div>
   <div class="track-artist">Track Artist</div>
