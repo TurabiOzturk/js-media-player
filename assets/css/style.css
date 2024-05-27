@@ -222,9 +222,6 @@ li.track-item p {
   cursor: pointer; 
   margin-left: 0.5em;
 }
-.shuffle-icon {
-  /* Add any desired styling for the icon */
-}
 .shuffleActive {
   color: #1db954; 
 }
