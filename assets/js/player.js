@@ -2,7 +2,6 @@
 // snake_case for CSS selector variables
 // camelCase for everything else
 
-// import ColorThief from "../../node_modules/colorthief/dist/color-thief.mjs";
 import ColorThief from "colorthief";
 import { trackObject } from "./track_object";
 import { selector } from "./selectors";
@@ -14,11 +13,12 @@ let trackIndex = 0;
 let isPlaying = false;
 let updateTimer;
 let colorArray;
-let isSpaceBarCooldown = false;
+let previousTrack;
 
 function generatePlaylist() {
   if (isPlayListGenerated !== true) {
     for (let i = 0; i < trackObject.length; i++) {
+      //console.log(i);
       nowPlaying = i;
       const trackItem = trackObject[i];
       const listItem = document.createElement("li");
@@ -28,39 +28,23 @@ function generatePlaylist() {
       const trackTitle = document.createElement("h3");
       trackTitle.textContent = trackItem.name;
       const trackArtist = document.createElement("p");
-      trackArtist.innerHTML = trackItem.artist;
+      trackArtist.textContent = trackItem.artist;
       const trackImage = document.createElement("img");
       trackImage.src = trackItem.image;
 
       // Append elements to the list item
       listItem.append(trackImage, listDiv);
-      // listItem.appendChild(trackImage);
-      // listItem.appendChild(listDiv);
       listDiv.append(trackTitle, trackArtist);
-      // listDiv.appendChild(trackTitle);
-      // listDiv.appendChild(trackArtist);
 
       // Append the list item to the track list element
       selector.track_list.appendChild(listItem);
-      isPlayListGenerated = true;
+      //console.log(++forCount);
     }
+    isPlayListGenerated = true;
   } else {
-    //console.log("There is already a trackObject of " +track_list.length+ " songs!");
+    console.log("There is already a list of " + trackObject.length + " songs!");
+    return false;
   }
-}
-
-// obsolete
-function random_bg_color() {
-  // Get a number between 64 to 256 (for getting lighter colors)
-  let red = Math.floor(Math.random() * 256) + 64;
-  let green = Math.floor(Math.random() * 256) + 64;
-  let blue = Math.floor(Math.random() * 256) + 64;
-
-  // Construct a color withe the given values
-  let bgColor = "rgb(" + red + "," + green + "," + blue + ")";
-
-  // Set the background to that color
-  document.body.style.background = bgColor;
 }
 
 function generateGradientString(colors) {
@@ -80,25 +64,24 @@ function generateGradientString(colors) {
 
 const colorThief = new ColorThief();
 
-const shuffleButton = document.querySelector(".shuffle-button");
-const shuffleIcon = document.querySelector(".shuffle-icon");
-let isShuffle = false; // Initial shuffle state
-
-shuffleButton.addEventListener("click", () => {
-  isShuffle = !isShuffle; // Toggle the shuffle state
-
-  if (isShuffle) {
-    shuffleIcon.classList.add("shuffleActive");
-    // Add your logic to shuffle the playlist here
+function changeBackground() {
+  if (selector.track_art.complete) {
+    colorArray = colorThief.getPalette(selector.track_art);
   } else {
-    shuffleIcon.classList.remove("shuffleActive");
-    // Add your logic to return to normal playback here
+    selector.track_art.addEventListener("load", function () {
+      colorArray = colorThief.getPalette(selector.track_art);
+      generateGradientString(colorArray);
+      const gradient = generateGradientString(colorArray);
+      document.body.style.cssText = `
+      background: ${gradient}; 
+      `;
+    });
   }
-});
+}
+
 function loadTrack(trackIndex) {
   clearInterval(updateTimer);
   resetValues();
-  generatePlaylist();
 
   selector.curr_track.src = trackObject[trackIndex].path;
   selector.curr_track.load();
@@ -114,29 +97,7 @@ function loadTrack(trackIndex) {
     "PLAYING " + (trackIndex + 1) + " OF " + trackObject.length;
 
   updateTimer = setInterval(seekUpdate, 1000);
-  // selector.curr_track.addEventListener("ended", () => {
-  //   if (isShuffle) {
-  //     console.log("shuffle on");
-  //     const randomSong = Math.floor(Math.random() * trackObject.length -1);
-  //     loadTrack(randomSong);
-  //   } else {
-  //     console.log("shuffle off");
-  //     nextTrack();
-  //   }
-  // });
-
-  if (selector.track_art.complete) {
-    colorArray = colorThief.getPalette(selector.track_art);
-  } else {
-    selector.track_art.addEventListener("load", function () {
-      colorArray = colorThief.getPalette(selector.track_art);
-      generateGradientString(colorArray);
-      const gradient = generateGradientString(colorArray);
-      document.body.style.cssText = `
-      background: ${gradient}; 
-      `;
-    });
-  }
+  changeBackground();
 }
 
 function resetValues() {
@@ -162,18 +123,36 @@ function pauseTrack() {
   selector.playpause_btn.innerHTML = '<i class="fa fa-play-circle fa-5x"></i>';
 }
 
-function nextTrack() {
-  if (trackIndex < trackObject.length - 1) {
-    trackIndex += 1;
-  } else {
-    trackIndex = 0;
-  }
-  //   trackObject.children[trackIndex].classList.add('active');
-  //   trackObject.children[nowPlaying].classList.remove('active');
+function shuffleTrackIndex() {
+  let shuffleNextTrack;
+  do {
+    shuffleNextTrack = Math.floor(Math.random() * trackObject.length);
+  } while (shuffleNextTrack === trackIndex);
 
+  return shuffleNextTrack;
+}
+
+function nextTrack() {
+  if (isShuffle) {
+    //if shuffle is of
+    //console.log("on", isShuffle);
+    trackIndex = shuffleTrackIndex();
+  } else {
+    //if shuffle is off
+    //console.log("off", isShuffle);
+    if (trackIndex < trackObject.length - 1) {
+      trackIndex += 1;
+    } else {
+      trackIndex = 0;
+    }
+  }
+  console.log(trackIndex);
   loadTrack(trackIndex);
   playTrack();
 }
+
+
+
 function prevTrack() {
   if (
     selector.curr_track.currentTime > 5 &&
@@ -193,7 +172,9 @@ function playFromList(event) {
   // Check if the clicked element is an <li> element
   if (event.target.tagName.toLowerCase() === "li") {
     // Get the index of the clicked list item
-    let clickedIndex = Array.from(trackObject.children).indexOf(event.target);
+    let clickedIndex = Array.from(selector.track_list.children).indexOf(
+      event.target
+    );
     if (clickedIndex == trackIndex) {
       return false;
     } else {
@@ -201,17 +182,9 @@ function playFromList(event) {
       trackIndex = clickedIndex;
       loadTrack(trackIndex);
       playTrack();
-      // Add the 'active' class to the clicked list item
-      // and remove it from the previously active item
-      trackObject.querySelector(".active")?.classList.remove("active");
-      //FIXME: adding class is already handled in loadTrack
-      //why does it not work when I comment out the below line?
-      event.target.classList.add("active");
     }
   }
 }
-
-// Add the event listener to the trackObject element
 
 function seekTo() {
   let seekto =
@@ -260,16 +233,37 @@ function seekUpdate() {
   }
 }
 
- 
+function initializePlayer() {
+  generatePlaylist();
+  loadTrack(trackIndex);
+}
+
+initializePlayer();
+
+// event listeners
+
+let isSpaceBarCooldown = false;
+const shuffleButton = document.querySelector(".shuffle-button");
+const shuffleIcon = document.querySelector(".shuffle-icon");
+let isShuffle = false;
+
+//listening to main points of interaction
+
+selector.playpause_btn.addEventListener("click", playpauseTrack);
+selector.next_btn.addEventListener("click", nextTrack);
+selector.prev_btn.addEventListener("click", prevTrack);
+selector.seek_slider.addEventListener("change", seekTo);
+selector.volume_slider.addEventListener("change", setVolume);
+selector.track_list.addEventListener("click", playFromList);
+selector.curr_track.addEventListener("ended", nextTrack);
+
 //play/pause with the space bar
 document.addEventListener("keydown", (event) => {
-  
   if (
     (event.key === " " || event.keyCode === 32) &&
     !["INPUT", "TEXTAREA"].includes(document.activeElement.tagName)
   ) {
     event.preventDefault(); // Prevent page scrolling
-
     if (!isSpaceBarCooldown) {
       //Only trigger this once per spacebar press.
       isSpaceBarCooldown = true; // Set cooldown while key is down
@@ -284,12 +278,16 @@ document.addEventListener("keyup", (event) => {
   }
 });
 
-selector.playpause_btn.addEventListener("click", playpauseTrack);
-selector.next_btn.addEventListener("click", nextTrack);
-selector.prev_btn.addEventListener("click", prevTrack);
-selector.seek_slider.addEventListener("change", seekTo);
-selector.volume_slider.addEventListener("change", setVolume);
-selector.track_list.addEventListener("click", playFromList);
-selector.curr_track.addEventListener("ended", nextTrack);
+//listening the shuffle button
 
-loadTrack(trackIndex);
+shuffleButton.addEventListener("click", () => {
+  isShuffle = !isShuffle; // Toggle the shuffle state
+
+  if (isShuffle) {
+    shuffleIcon.classList.add("shuffleActive");
+    // Add your logic to shuffle the playlist here
+  } else {
+    shuffleIcon.classList.remove("shuffleActive");
+    // Add your logic to return to normal playback here
+  }
+});

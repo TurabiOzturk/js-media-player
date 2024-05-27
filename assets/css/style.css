@@ -90,7 +90,7 @@ body {
 .playpause-track,
 .prev-track,
 .next-track {
-  padding: 25px;
+  margin: 25px;
   opacity: 0.8;
 
   /* Smoothly transition the opacity */
@@ -219,14 +219,12 @@ li.track-item p {
 }
 
 .shuffle-button {
-  cursor: pointer; /* Make it look clickable */
+  cursor: pointer; 
+  margin-left: 0.5em;
 }
 .shuffle-icon {
   /* Add any desired styling for the icon */
 }
 .shuffleActive {
-  color: #1db954; /* Example active color (Spotify green) */
-}
-.shuffleInactive {
-  color: #999; /* Example inactive color */
+  color: #1db954; 
 }

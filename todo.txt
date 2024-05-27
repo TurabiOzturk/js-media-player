@@ -3,7 +3,6 @@ Todo:
 
 TODO:
 
-- Add shuffle option
 - Change variable names from snake_case to camelCase
 - Add rating for songs 1-5 > need to pull songs from JSON first
 - Log how many times each song have been played
@@ -21,6 +20,8 @@ TODO:
 
 
 Project TODO:
+
+- Vercel file paths not working
 - Fork the initial repo
 - Contribute to initial repo
 - Write documentation for the changes made
@@ -33,6 +34,8 @@ DONE:
 - Change the current track when a song from list getting clicked ✅
 - Parse the dominant color of the pic ✅
     - set dominant color as background color using colorThief ✅
+- Add shuffle option ✅
+
     
 
 
