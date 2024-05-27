@@ -6,6 +6,8 @@ import ColorThief from "colorthief";
 import { trackObject } from "./track_object";
 import { selector } from "./selectors";
 
+const colorThief = new ColorThief();
+
 let isPlayListGenerated = false;
 let nowPlaying;
 
@@ -47,6 +49,26 @@ function generatePlaylist() {
   }
 }
 
+function changeBackground() {
+  if (selector.track_art.complete) {
+    colorArray = colorThief.getPalette(selector.track_art);
+    applyGradient(colorArray); // Apply gradient if colors are ready
+  } else {
+    selector.track_art.addEventListener("load", function () {
+      colorArray = colorThief.getPalette(selector.track_art);
+      applyGradient(colorArray); // Apply gradient after image loads
+    });
+  }
+}
+
+// Separate function to apply gradient
+function applyGradient(colors) {
+  if (!colors) return; // Guard clause for undefined colors
+
+  const gradient = generateGradientString(colors);
+  document.body.style.cssText = `background: ${gradient};`;
+}
+
 function generateGradientString(colors) {
   const randomAngle = Math.floor(Math.random() * 181);
 
@@ -60,24 +82,6 @@ function generateGradientString(colors) {
   }
   gradientString += ")";
   return gradientString;
-}
-
-const colorThief = new ColorThief();
-
-function changeBackground() {
-  if (selector.track_art.complete) {
-    colorArray = colorThief.getPalette(selector.track_art);
-  } else {
-    selector.track_art.addEventListener("load", function () {
-      console.log('yuklendi moruk');
-      colorArray = colorThief.getPalette(selector.track_art);
-      generateGradientString(colorArray);
-      const gradient = generateGradientString(colorArray);
-      document.body.style.cssText = `
-      background: ${gradient}; 
-      `;
-    });
-  }
 }
 
 function loadTrack(trackIndex) {
@@ -98,7 +102,7 @@ function loadTrack(trackIndex) {
     "PLAYING " + (trackIndex + 1) + " OF " + trackObject.length;
 
   updateTimer = setInterval(seekUpdate, 1000);
-  
+
   changeBackground();
 }
 
@@ -151,8 +155,6 @@ function nextTrack() {
   loadTrack(trackIndex);
   playTrack();
 }
-
-
 
 function prevTrack() {
   if (

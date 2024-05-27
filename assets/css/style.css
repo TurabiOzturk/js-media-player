@@ -11,14 +11,11 @@
 }
 
 body {
-  background-color: lightgreen;
-
   transition: background-color 0.5s;
   font-family: "Roboto Slab", serif;
   font-optical-sizing: auto;
   background-size: 100% 100%;
   animation: gradient 15s ease-in-out infinite alternate;
-  overflow: hidden;
 }
 /*
   body::after {
@@ -87,6 +84,12 @@ body {
   flex-direction: row;
   align-items: center;
 }
+
+ul#track-list {
+  padding: 0;
+  
+}
+
 
 .playpause-track,
 .prev-track,
