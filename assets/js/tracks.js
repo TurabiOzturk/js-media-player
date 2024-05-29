@@ -1,4 +1,4 @@
-const trackObject = [
+const tracks = [
   {
     name: "Night Owl",
     artist: "Broke For Free",
@@ -22,4 +22,4 @@ const trackObject = [
   },
 ];
 
-export { trackObject };
+export { tracks };
