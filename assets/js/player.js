@@ -80,7 +80,7 @@ const player = {
       player.load(
         player.currentTrackIndex > 0
           ? player.currentTrackIndex - 1
-          : tracks.length - 1
+          : player.tracks.length - 1
       );
       player.play();
     }
@@ -131,7 +131,7 @@ const player = {
   },
   shuffleNextTrack: () => {
     while (true) {
-      const randomIndex = Math.floor(Math.random() * tracks.length);
+      const randomIndex = Math.floor(Math.random() * player.tracks.length);
       if (randomIndex !== player.currentTrackIndex) {
         return randomIndex;
       }
