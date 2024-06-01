@@ -1,4 +1,4 @@
-const trackObject = [
+const tracks = [
   {
     name: "Night Owl",
     artist: "Broke For Free",
@@ -20,6 +20,20 @@ const trackObject = [
       "https://images.pexels.com/photos/1717969/pexels-photo-1717969.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
     path: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Shipping_Lanes.mp3",
   },
+  {
+    name: "Dusty Chords",
+    artist: "Rafael Archangel",
+    image:
+      "https://images.pexels.com/photos/165263/pexels-photo-165263.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    path: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Rafael_Archangel/Library_Music_Vol1/Rafael_Archangel_-_04_-_Dusty_Chords.mp3",
+  },
+  {
+    name: "Beautiful Geometry",
+    artist: "Phish Funk",
+    image:
+      "https://images.pexels.com/photos/2311713/pexels-photo-2311713.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    path: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/Toucan_Music/Phish_Funk/Best_Bytes_Volume_4/Phish_Funk_-_19_-_Beautiful_Geometry.mp3",
+  },
 ];
 
-export { trackObject };
+export { tracks };

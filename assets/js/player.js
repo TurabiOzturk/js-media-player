@@ -1,264 +1,280 @@
-//two simple linting rules:
-// snake_case for CSS selector variables
-// camelCase for everything else
+import { tracks } from "./tracks";
+import {
+  addTrackToUI,
+  loadTrackToUI,
+  refreshBackground,
+  UIObjects,
+} from "./ui";
 
-import ColorThief from "colorthief";
-import { trackObject } from "./track_object";
-import { selector } from "./selectors";
+const player = {
+  isPlaying: false,
+  isShuffling: false,
+  tracks: [],
+  currentTrackIndex: 0,
+  previousTrackIndex: 0,
+  nextTrackIndex: 1,
+  minValue: 0,
+  maxValue: 0,
+  playbackArray: [],
+  createPlaybackArray: (val, array) => {
+    for (let i = 0; i <= val; i++) {
+      array.push(player.tracks[i].name);
+    }
+  },
+  reset: () => {
+    UIObjects.currentTime.textContent = "00:00";
+    UIObjects.totalDuration.textContent = "00:00";
+    UIObjects.seekSlider.value = 0;
+  },
+  playPauseTrack: () => {
+    if (!player.isPlaying) return player.play();
 
-const colorThief = new ColorThief();
+    player.pause();
+  },
+  play: () => {
+    UIObjects.currentAudio.play();
+    player.isPlaying = true;
+    UIObjects.playPauseButton.innerHTML =
+      '<i class="fa fa-pause-circle fa-5x"></i>';
+  },
+  pause: () => {
+    UIObjects.currentAudio.pause();
+    player.isPlaying = false;
+    UIObjects.playPauseButton.innerHTML =
+      '<i class="fa fa-play-circle fa-5x"></i>';
+  },
+  load: (trackIdx) => {
+    console.log(
+      "Now playing track:",
+      player.currentTrackIndex
+    );
+    console.log(
+      "Previous track:",
+      player.previousTrackIndex
+    );
+    console.log(
+      "Next track:",
+      player.nextTrackIndex
+    );
+    clearInterval(updateTimer);
+    player.reset();
+    loadTrackToUI(
+      player.currentTrackIndex,
+      player.previousTrackIndex,
+      player.tracks.length,
+      player.tracks[trackIdx].name,
+      player.tracks[trackIdx].path,
+      player.tracks[trackIdx].image,
+      player.tracks[trackIdx].artist
+    );
 
-let isPlayListGenerated = false;
-let nowPlaying;
+    updateTimer = setInterval(player.updateProgressBar, 1000);
+    refreshBackground();
+  },
+  // changeTrack: (changeType) => {
+  //   // Update Indexes Based on Change Type
+  //   if (changeType === "next") {
+  //     player.previousTrackIndex += 1;
+  //     player.currentTrackIndex = player.nextTrackIndex;
+  //   } else if (changeType === "previous") {
+  //     player.nextTrackIndex -= 1;
+  //     player.currentTrackIndex = player.previousTrackIndex;
+  //   } else if (changeType === "playlist") {
+  //   } else {
+  //     console.error("Invalid track change type:", type);
+  //   }
+  //   console.log(
+  //     changeType,
+  //     "current:",
+  //     player.currentTrackIndex,
+  //     "prev:",
+  //     player.previousTrackIndex,
+  //     "next:",
+  //     player.nextTrackIndex
+  //   );
+  //   // player.load(player.currentTrackIndex);
+  //   // player.play();
+  // },
+  playNext: () => {
+    console.log("playNext called");
+    if (player.isShuffling) {
+      player.nextTrackIndex = player.shuffleNextTrack();
+    } else {
+      player.previousTrackIndex = player.currentTrackIndex;
+      player.currentTrackIndex = player.nextTrackIndex;
+      player.nextTrackIndex =
+        (player.nextTrackIndex + 1) % player.playbackArray.length;
+      // if (player.nextTrackIndex < player.maxValue) {
+      //   player.nextTrackIndex++;
+      // } else {
+      //   player.nextTrackIndex = player.minValue;
+      // }
+    }
+    player.load(player.currentTrackIndex);
+    player.play();
+    // console.log(
+    //   "Now playing track:",
+    //   player.playbackArray[player.currentTrackIndex]
+    // );
+    // console.log(
+    //   "Previous track:",
+    //   player.playbackArray[player.previousTrackIndex]
+    // );
+  },
+  playPrevious: () => {
+    if(player.currentTrackIndex <= 0 ){
+      player.previousTrackIndex = player.maxValue;
+    } else {
+      player.previousTrackIndex--;
+    }
+   
+    // player.previousTrackIndex =
+    //   (player.previousTrackIndex - 1 + player.playbackArray.length) %
+    //   player.playbackArray.length;
 
-let trackIndex = 0;
-let isPlaying = false;
+    // console.log(
+    //   "Now playing track:",
+    //   player.playbackArray[player.currentTrackIndex]
+    // );
+    // console.log(
+    //   "Previous track:",
+    //   player.playbackArray[player.previousTrackIndex]
+    // );
+    // if (player.previousTrackIndex == player.minValue) {
+    //   //listenin başına döndüyse
+    //   //listenin sonuna at
+    //   player.previousTrackIndex = player.maxValue;
+    // } else {
+    //   player.previousTrackIndex -= 1;
+    // }
+    player.load(player.previousTrackIndex);
+    player.play();
+    player.nextTrackIndex = player.currentTrackIndex;
+    player.currentTrackIndex = player.previousTrackIndex;
+    // if (
+    //   UIObjects.currentAudio.currentTime > 5 &&
+    //   UIObjects.currentAudio.currentTime < 10
+    // ) {
+    //   console.log("somewhere between 5 to 10");
+    //   // TODO: start over
+    // } else {
+    // }
+  },
+  setVolume: (volume) => {
+    UIObjects.currentAudio.volume = UIObjects.volumeSlider.value / 100;
+  },
+  setProgressBar: () => {
+    UIObjects.currentAudio.currentTime =
+      UIObjects.currentAudio.duration * (UIObjects.seekSlider.value / 100);
+  },
+  updateProgressBar: () => {
+    let seekPosition = 0;
+
+    if (!isNaN(UIObjects.currentAudio.duration)) {
+      seekPosition =
+        UIObjects.currentAudio.currentTime *
+        (100 / UIObjects.currentAudio.duration);
+
+      UIObjects.seekSlider.value = seekPosition;
+
+      let currentMinutes = Math.floor(UIObjects.currentAudio.currentTime / 60);
+      let currentSeconds = Math.floor(
+        UIObjects.currentAudio.currentTime - currentMinutes * 60
+      );
+      let durationMinutes = Math.floor(UIObjects.currentAudio.duration / 60);
+      let durationSeconds = Math.floor(
+        UIObjects.currentAudio.duration - durationMinutes * 60
+      );
+
+      if (currentSeconds < 10) {
+        currentSeconds = "0" + currentSeconds;
+      }
+      if (durationSeconds < 10) {
+        durationSeconds = "0" + durationSeconds;
+      }
+      if (currentMinutes < 10) {
+        currentMinutes = "0" + currentMinutes;
+      }
+      if (durationMinutes < 10) {
+        durationMinutes = "0" + durationMinutes;
+      }
+
+      UIObjects.currentTime.textContent = currentMinutes + ":" + currentSeconds;
+      UIObjects.totalDuration.textContent =
+        durationMinutes + ":" + durationSeconds;
+    }
+  },
+  shuffleNextTrack: () => {
+    while (true) {
+      const randomIndex = Math.floor(Math.random() * player.tracks.length);
+      if (
+        randomIndex !== player.currentTrackIndex &&
+        randomIndex !== player.previousTrackIndex
+      ) {
+        return randomIndex;
+      }
+    }
+  },
+};
+
 let updateTimer;
-let colorArray;
-let previousTrack;
 
 function generatePlaylist() {
-  if (isPlayListGenerated !== true) {
-    for (let i = 0; i < trackObject.length; i++) {
-      //console.log(i);
-      nowPlaying = i;
-      const trackItem = trackObject[i];
-      const listItem = document.createElement("li");
-      const listDiv = document.createElement("div");
-      listItem.classList.add("track-item");
+  if (player.tracks.length === 0) {
+    player.tracks = tracks; // put tracks into player object
 
-      const trackTitle = document.createElement("h3");
-      trackTitle.textContent = trackItem.name;
-      const trackArtist = document.createElement("p");
-      trackArtist.textContent = trackItem.artist;
-      const trackImage = document.createElement("img");
-      trackImage.src = trackItem.image;
-
-      // Append elements to the list item
-      listItem.append(trackImage, listDiv);
-      listDiv.append(trackTitle, trackArtist);
-
-      // Append the list item to the track list element
-      selector.track_list.appendChild(listItem);
-      //console.log(++forCount);
+    for (let i = 0; i < player.tracks.length; i++) {
+      addTrackToUI(
+        player.tracks[i].name,
+        player.tracks[i].artist,
+        player.tracks[i].image
+      );
     }
-    isPlayListGenerated = true;
   } else {
-    console.log("There is already a list of " + trackObject.length + " songs!");
+    console.log(
+      "There is already a list of " + player.tracks.length + " songs!"
+    );
     return false;
   }
-}
-
-function changeBackground() {
-  if (selector.track_art.complete) {
-    colorArray = colorThief.getPalette(selector.track_art);
-    applyGradient(colorArray); // Apply gradient if colors are ready
-  } else {
-    selector.track_art.addEventListener("load", function () {
-      colorArray = colorThief.getPalette(selector.track_art);
-      applyGradient(colorArray); // Apply gradient after image loads
-    });
-  }
-}
-
-// Separate function to apply gradient
-function applyGradient(colors) {
-  if (!colors) return; // Guard clause for undefined colors
-
-  const gradient = generateGradientString(colors);
-  document.body.style.cssText = `background: ${gradient};`;
-}
-
-function generateGradientString(colors) {
-  const randomAngle = Math.floor(Math.random() * 181);
-
-  let gradientString = `linear-gradient(${randomAngle + "deg"}, `; // Change "to right" for a different direction
-  for (let i = 0; i < colors.length; i++) {
-    const rgbString = `rgb(${colors[i][0]}, ${colors[i][1]}, ${colors[i][2]})`;
-    gradientString += rgbString;
-    if (i < colors.length - 1) {
-      gradientString += ", ";
-    }
-  }
-  gradientString += ")";
-  return gradientString;
-}
-
-function loadTrack(trackIndex) {
-  clearInterval(updateTimer);
-  resetValues();
-
-  selector.curr_track.src = trackObject[trackIndex].path;
-  selector.curr_track.load();
-
-  selector.track_list.children[trackIndex].classList.add("active");
-  selector.track_list.children[nowPlaying].classList.remove("active");
-  nowPlaying = trackIndex;
-
-  selector.track_art.src = `${trackObject[trackIndex].image}`;
-  selector.track_name.textContent = trackObject[trackIndex].name;
-  selector.track_artist.textContent = trackObject[trackIndex].artist;
-  selector.now_playing.textContent =
-    "PLAYING " + (trackIndex + 1) + " OF " + trackObject.length;
-
-  updateTimer = setInterval(seekUpdate, 1000);
-
-  changeBackground();
-}
-
-function resetValues() {
-  selector.curr_time.textContent = "00:00";
-  selector.total_duration.textContent = "00:00";
-  selector.seek_slider.value = 0;
-}
-
-function playpauseTrack() {
-  if (!isPlaying) playTrack();
-  else pauseTrack();
-}
-
-function playTrack() {
-  selector.curr_track.play();
-  isPlaying = true;
-  selector.playpause_btn.innerHTML = '<i class="fa fa-pause-circle fa-5x"></i>';
-}
-
-function pauseTrack() {
-  selector.curr_track.pause();
-  isPlaying = false;
-  selector.playpause_btn.innerHTML = '<i class="fa fa-play-circle fa-5x"></i>';
-}
-
-function shuffleTrackIndex() {
-  let shuffleNextTrack;
-  do {
-    shuffleNextTrack = Math.floor(Math.random() * trackObject.length);
-  } while (shuffleNextTrack === trackIndex);
-
-  return shuffleNextTrack;
-}
-
-function nextTrack() {
-  if (isShuffle) {
-    //if shuffle is of
-    //console.log("on", isShuffle);
-    trackIndex = shuffleTrackIndex();
-  } else {
-    //if shuffle is off
-    //console.log("off", isShuffle);
-    if (trackIndex < trackObject.length - 1) {
-      trackIndex += 1;
-    } else {
-      trackIndex = 0;
-    }
-  }
-  loadTrack(trackIndex);
-  playTrack();
-}
-
-function prevTrack() {
-  if (
-    selector.curr_track.currentTime > 5 &&
-    selector.curr_track.currentTime < 10
-  ) {
-    console.log("somewhere between 5 to 10");
-  } else {
-    console.log("somewhere else");
-    //DIS NOT WORKEN
-    if (trackIndex > 0) trackIndex -= 1;
-    else trackIndex = trackObject.length - 1;
-  }
-  loadTrack(trackIndex);
-  playTrack();
 }
 function playFromList(event) {
   // Check if the clicked element is an <li> element
   if (event.target.tagName.toLowerCase() === "li") {
     // Get the index of the clicked list item
-    let clickedIndex = Array.from(selector.track_list.children).indexOf(
+    let clickedIndex = Array.from(UIObjects.trackList.children).indexOf(
       event.target
     );
-    if (clickedIndex == trackIndex) {
-      return false;
-    } else {
-      // Update the trackIndex and load the new track
-      trackIndex = clickedIndex;
-      loadTrack(trackIndex);
-      playTrack();
+    if (clickedIndex !== player.currentTrackIndex) {
+      player.load(clickedIndex);
+      player.play();
     }
-  }
-}
-
-function seekTo() {
-  let seekto =
-    selector.curr_track.duration * (selector.seek_slider.value / 100);
-  selector.curr_track.currentTime = seekto;
-}
-
-function setVolume() {
-  selector.curr_track.volume = selector.volume_slider.value / 100;
-}
-
-function seekUpdate() {
-  let seekPosition = 0;
-
-  if (!isNaN(selector.curr_track.duration)) {
-    seekPosition =
-      selector.curr_track.currentTime * (100 / selector.curr_track.duration);
-
-    selector.seek_slider.value = seekPosition;
-
-    let currentMinutes = Math.floor(selector.curr_track.currentTime / 60);
-    let currentSeconds = Math.floor(
-      selector.curr_track.currentTime - currentMinutes * 60
-    );
-    let durationMinutes = Math.floor(selector.curr_track.duration / 60);
-    let durationSeconds = Math.floor(
-      selector.curr_track.duration - durationMinutes * 60
-    );
-
-    if (currentSeconds < 10) {
-      currentSeconds = "0" + currentSeconds;
-    }
-    if (durationSeconds < 10) {
-      durationSeconds = "0" + durationSeconds;
-    }
-    if (currentMinutes < 10) {
-      currentMinutes = "0" + currentMinutes;
-    }
-    if (durationMinutes < 10) {
-      durationMinutes = "0" + durationMinutes;
-    }
-
-    selector.curr_time.textContent = currentMinutes + ":" + currentSeconds;
-    selector.total_duration.textContent =
-      durationMinutes + ":" + durationSeconds;
   }
 }
 
 function initializePlayer() {
   generatePlaylist();
-  loadTrack(trackIndex);
-}
+  player.maxValue = player.tracks.length - 1;
+  player.createPlaybackArray(player.maxValue, player.playbackArray);
+  player.previousTrackIndex = player.maxValue;
 
-initializePlayer();
+  player.load(player.currentTrackIndex);
+}
 
 // event listeners
 
 let isSpaceBarCooldown = false;
 const shuffleButton = document.querySelector(".shuffle-button");
 const shuffleIcon = document.querySelector(".shuffle-icon");
-let isShuffle = false;
 
 //listening to main points of interaction
 
-selector.playpause_btn.addEventListener("click", playpauseTrack);
-selector.next_btn.addEventListener("click", nextTrack);
-selector.prev_btn.addEventListener("click", prevTrack);
-selector.seek_slider.addEventListener("change", seekTo);
-selector.volume_slider.addEventListener("change", setVolume);
-selector.track_list.addEventListener("click", playFromList);
-selector.curr_track.addEventListener("ended", nextTrack);
+UIObjects.playPauseButton.addEventListener("click", player.playPauseTrack);
+UIObjects.nextButton.addEventListener("click", player.playNext);
+UIObjects.previousButton.addEventListener("click", player.playPrevious);
+UIObjects.seekSlider.addEventListener("change", player.setProgressBar);
+UIObjects.volumeSlider.addEventListener("change", player.setVolume);
+UIObjects.trackList.addEventListener("click", playFromList);
+UIObjects.currentAudio.addEventListener("ended", player.playNext);
 
 //play/pause with the space bar
 document.addEventListener("keydown", (event) => {
@@ -270,7 +286,7 @@ document.addEventListener("keydown", (event) => {
     if (!isSpaceBarCooldown) {
       //Only trigger this once per spacebar press.
       isSpaceBarCooldown = true; // Set cooldown while key is down
-      playpauseTrack();
+      player.playPauseTrack();
     }
   }
 });
@@ -284,9 +300,9 @@ document.addEventListener("keyup", (event) => {
 //listening the shuffle button
 
 shuffleButton.addEventListener("click", () => {
-  isShuffle = !isShuffle; // Toggle the shuffle state
+  player.isShuffling = !player.isShuffling; // Toggle the shuffle state
 
-  if (isShuffle) {
+  if (player.isShuffling) {
     shuffleIcon.classList.add("shuffleActive");
     // Add your logic to shuffle the playlist here
   } else {
@@ -294,3 +310,5 @@ shuffleButton.addEventListener("click", () => {
     // Add your logic to return to normal playback here
   }
 });
+
+initializePlayer();
