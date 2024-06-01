@@ -17,26 +17,8 @@ body {
   background-size: 100% 100%;
   animation: gradient 15s ease-in-out infinite alternate;
 }
-/*
-  body::after {
-  
-      
-      
-  }
-     
-       */
-
-/* body {
-        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-        background-size: 400% 400%;
-        animation: gradient 15s ease infinite;
-        height: 100vh;
-      } */
-
-
 
 .player {
-  /* height: 95vh; */
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -55,7 +37,6 @@ body {
   margin: 25px;
   height: 250px;
   width: 250px;
-  /* background-image: url("https://images.pexels.com/photos/262034/pexels-photo-262034.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"); */
   background-size: cover;
   border-radius: 15%;
 }
@@ -189,6 +170,7 @@ li.track-item:not(:last-child) {
 li.track-item img {
   width: 100px;
   height: 100px;
+  object-fit: cover;
 }
 
 li.track-item div {
@@ -199,8 +181,6 @@ li.track-item div {
 li.track-item div > h3 {
   font-weight: 400;
 }
-
-
 
 li.track-item p {
   margin: 0;
@@ -218,6 +198,7 @@ li.track-item p {
 .bi-hand-thumbs-down:hover::before {
   content: "\F404";
 }
+
 .bi-hand-thumbs-up:hover::before {
   content: "\F406";
 }

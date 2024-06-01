@@ -3,7 +3,8 @@ Todo:
 
 TODO:
 
-- Change variable names from snake_case to camelCase
+- media queries
+- scroll bar style
 - Add rating for songs 1-5 > need to pull songs from JSON first
 - Log how many times each song have been played
 - Add repeat option for song & playlist
@@ -16,12 +17,10 @@ TODO:
 - onload background showing weird
 - Mute/unmute
 - Reset track if current seconds is > 3 
-- play/pause with space button
 
 
 Project TODO:
 
-- Vercel file paths not working
 - Fork the initial repo
 - Contribute to initial repo
 - Write documentation for the changes made
@@ -29,6 +28,9 @@ Project TODO:
 
 DONE: 
 
+- Change variable names from snake_case to camelCase ✅
+- play/pause with space button ✅
+- Vercel file paths not working ✅
 - show playlist on the screen ✅
 - Make list scrollable ✅
 - Change the current track when a song from list getting clicked ✅

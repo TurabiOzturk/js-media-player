@@ -12,6 +12,15 @@ const player = {
   tracks: [],
   currentTrackIndex: 0,
   previousTrackIndex: 0,
+  nextTrackIndex: 1,
+  minValue: 0,
+  maxValue: 0,
+  playbackArray: [],
+  createPlaybackArray: (val, array) => {
+    for (let i = 0; i <= val; i++) {
+      array.push(player.tracks[i].name);
+    }
+  },
   reset: () => {
     UIObjects.currentTime.textContent = "00:00";
     UIObjects.totalDuration.textContent = "00:00";
@@ -35,55 +44,121 @@ const player = {
       '<i class="fa fa-play-circle fa-5x"></i>';
   },
   load: (trackIdx) => {
+    console.log(
+      "Now playing track:",
+      player.currentTrackIndex
+    );
+    console.log(
+      "Previous track:",
+      player.previousTrackIndex
+    );
+    console.log(
+      "Next track:",
+      player.nextTrackIndex
+    );
     clearInterval(updateTimer);
     player.reset();
-
-    player.previousTrackIndex = player.currentTrackIndex;
-    player.currentTrackIndex = trackIdx;
-
     loadTrackToUI(
       player.currentTrackIndex,
       player.previousTrackIndex,
       player.tracks.length,
-      player.tracks[player.currentTrackIndex].name,
-      player.tracks[player.currentTrackIndex].path,
-      player.tracks[player.currentTrackIndex].image,
-      player.tracks[player.currentTrackIndex].artist
+      player.tracks[trackIdx].name,
+      player.tracks[trackIdx].path,
+      player.tracks[trackIdx].image,
+      player.tracks[trackIdx].artist
     );
 
     updateTimer = setInterval(player.updateProgressBar, 1000);
-
     refreshBackground();
   },
+  // changeTrack: (changeType) => {
+  //   // Update Indexes Based on Change Type
+  //   if (changeType === "next") {
+  //     player.previousTrackIndex += 1;
+  //     player.currentTrackIndex = player.nextTrackIndex;
+  //   } else if (changeType === "previous") {
+  //     player.nextTrackIndex -= 1;
+  //     player.currentTrackIndex = player.previousTrackIndex;
+  //   } else if (changeType === "playlist") {
+  //   } else {
+  //     console.error("Invalid track change type:", type);
+  //   }
+  //   console.log(
+  //     changeType,
+  //     "current:",
+  //     player.currentTrackIndex,
+  //     "prev:",
+  //     player.previousTrackIndex,
+  //     "next:",
+  //     player.nextTrackIndex
+  //   );
+  //   // player.load(player.currentTrackIndex);
+  //   // player.play();
+  // },
   playNext: () => {
-    let nextTrackIndex = 0;
+    console.log("playNext called");
     if (player.isShuffling) {
-      nextTrackIndex = player.shuffleNextTrack();
+      player.nextTrackIndex = player.shuffleNextTrack();
     } else {
-      if (nextTrackIndex < player.tracks.length - 1) {
-        nextTrackIndex++;
-      } else {
-        nextTrackIndex = 0;
-      }
+      player.previousTrackIndex = player.currentTrackIndex;
+      player.currentTrackIndex = player.nextTrackIndex;
+      player.nextTrackIndex =
+        (player.nextTrackIndex + 1) % player.playbackArray.length;
+      // if (player.nextTrackIndex < player.maxValue) {
+      //   player.nextTrackIndex++;
+      // } else {
+      //   player.nextTrackIndex = player.minValue;
+      // }
     }
-    player.load(nextTrackIndex);
+    player.load(player.currentTrackIndex);
     player.play();
+    // console.log(
+    //   "Now playing track:",
+    //   player.playbackArray[player.currentTrackIndex]
+    // );
+    // console.log(
+    //   "Previous track:",
+    //   player.playbackArray[player.previousTrackIndex]
+    // );
   },
   playPrevious: () => {
-    if (
-      UIObjects.currentAudio.currentTime > 5 &&
-      UIObjects.currentAudio.currentTime < 10
-    ) {
-      console.log("somewhere between 5 to 10");
-      // TODO: start over
+    if(player.currentTrackIndex <= 0 ){
+      player.previousTrackIndex = player.maxValue;
     } else {
-      player.load(
-        player.currentTrackIndex > 0
-          ? player.currentTrackIndex - 1
-          : player.tracks.length - 1
-      );
-      player.play();
+      player.previousTrackIndex--;
     }
+   
+    // player.previousTrackIndex =
+    //   (player.previousTrackIndex - 1 + player.playbackArray.length) %
+    //   player.playbackArray.length;
+
+    // console.log(
+    //   "Now playing track:",
+    //   player.playbackArray[player.currentTrackIndex]
+    // );
+    // console.log(
+    //   "Previous track:",
+    //   player.playbackArray[player.previousTrackIndex]
+    // );
+    // if (player.previousTrackIndex == player.minValue) {
+    //   //listenin başına döndüyse
+    //   //listenin sonuna at
+    //   player.previousTrackIndex = player.maxValue;
+    // } else {
+    //   player.previousTrackIndex -= 1;
+    // }
+    player.load(player.previousTrackIndex);
+    player.play();
+    player.nextTrackIndex = player.currentTrackIndex;
+    player.currentTrackIndex = player.previousTrackIndex;
+    // if (
+    //   UIObjects.currentAudio.currentTime > 5 &&
+    //   UIObjects.currentAudio.currentTime < 10
+    // ) {
+    //   console.log("somewhere between 5 to 10");
+    //   // TODO: start over
+    // } else {
+    // }
   },
   setVolume: (volume) => {
     UIObjects.currentAudio.volume = UIObjects.volumeSlider.value / 100;
@@ -132,7 +207,10 @@ const player = {
   shuffleNextTrack: () => {
     while (true) {
       const randomIndex = Math.floor(Math.random() * player.tracks.length);
-      if (randomIndex !== player.currentTrackIndex) {
+      if (
+        randomIndex !== player.currentTrackIndex &&
+        randomIndex !== player.previousTrackIndex
+      ) {
         return randomIndex;
       }
     }
@@ -175,6 +253,10 @@ function playFromList(event) {
 
 function initializePlayer() {
   generatePlaylist();
+  player.maxValue = player.tracks.length - 1;
+  player.createPlaybackArray(player.maxValue, player.playbackArray);
+  player.previousTrackIndex = player.maxValue;
+
   player.load(player.currentTrackIndex);
 }
 

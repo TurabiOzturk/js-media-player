@@ -14,6 +14,8 @@ export const UIObjects = {
   previousButton: document.querySelector(".prev-track"),
   nextButton: document.querySelector(".next-track"),
   volumeSlider: document.querySelector(".volume_slider"),
+  shuffleButton: document.querySelector(".shuffle-button"),
+  shuffleIcon: document.querySelector(".shuffle-icon"),
 };
 
 export const addTrackToUI = (trackName, trackArtist, trackImage) => {
