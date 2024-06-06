@@ -214,6 +214,11 @@ li.track-item p {
   margin-left: 0.5em;
 }
 
-.repeatActive {
+
+.repeat-all::before {
+  content: "\f813";
+}
+
+.repeat-all {
   color: #1db954;
 }

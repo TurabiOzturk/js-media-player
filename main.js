@@ -53,7 +53,7 @@ document.querySelector("#app").innerHTML = `
 </div>
 
 <div class="repeat-button">
-<i class="fa repeat-icon"></i>
+<i id="repeat-icon" class="bi bi-repeat"></i>
 </div>
   <!-- <i class="bi bi-hand-thumbs-up-fill"></i>
   <i class="bi bi-hand-thumbs-down-fill"></i> -->

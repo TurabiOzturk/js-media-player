@@ -12,11 +12,12 @@ const player = {
   repeatState: 0,
   tracks: [],
   repeatStates: {
-    "no-repeat": { next: "repeat-one", iconClass: "fa-repeat-off" },
-    "repeat-one": { next: "repeat-all", iconClass: "fa-repeat-1" },
-    "repeat-all": { next: "no-repeat", iconClass: "fa-repeat" },
+    "no-repeat": { next: "repeat-one", iconClass: "bi-repeat" },
+    "repeat-one": { next: "repeat-all", iconClass: "bi-repeat-1" },
+    "repeat-all": { next: "no-repeat", iconClass: "repeat-all" },
   },
-  currentState: "no-repeat",
+  currentRepeatState: "no-repeat",
+  nextRepeatState: "repeat-one",
   currentTrackIndex: 0,
   previousTrackIndex: 0,
   nextTrackIndex: 1,
@@ -222,20 +223,26 @@ const player = {
     }
   },
   //IN PROGRESS > TODO: FIX IT
-  updateRepeatButtonIcon: () => {
-    console.log(Object.values(player.repeatStates).map((state) => state.iconClass));
+  updateRepeatButtonIcon: (current, next) => {
     UIObjects.repeatIcon.classList.remove(
-      Object.values(player.repeatStates).map((state) => state.iconClass)
+      //Object.values(player.repeatStates).map((state) => state.iconClass)
+      player.repeatStates[current].iconClass
     );
-    UIObjects.repeatIcon.classList.add(player.repeatStates[player.currentState].iconClass);
+    UIObjects.repeatIcon.classList.add(player.repeatStates[next].iconClass);
   },
   toggleRepeat: () => {
-    console.log(player.currentState);
     // Transition to the next state
-    player.currentState = player.repeatStates[player.currentState].next;
-    console.log(player.currentState);
-    // Update the button's appearance (icon or text)
-    player.updateRepeatButtonIcon();
+    player.nextRepeatState =
+      player.repeatStates[player.currentRepeatState].next;
+
+    // Update repeat icon
+    player.updateRepeatButtonIcon(player.currentRepeatState, player.nextRepeatState);
+    // Switch current state with the updated state
+    player.currentRepeatState = player.nextRepeatState;
+
+    // Update the next state
+    player.nextRepeatState = player.repeatStates[player.currentRepeatState].next;
+    console.log(player.currentRepeatState, player.nextRepeatState);
   },
 };
 
@@ -276,4 +283,3 @@ document.addEventListener("keyup", (event) => {
 });
 
 player.initializePlayer();
-UIObjects.repeatIcon.classList.add('fa-repeat')
