@@ -16,6 +16,9 @@ export const UIObjects = {
   volumeSlider: document.querySelector(".volume_slider"),
   shuffleButton: document.querySelector(".shuffle-button"),
   shuffleIcon: document.querySelector(".shuffle-icon"),
+  muteIcon: document.getElementById("volume-mute-icon"),
+  repeatButton: document.querySelector(".repeat-button"),
+  repeatIcon: document.querySelector(".repeat-icon"),
 };
 
 export const addTrackToUI = (trackName, trackArtist, trackImage) => {
@@ -48,7 +51,9 @@ export const loadTrackToUI = (
   UIObjects.currentAudio.src = trackPath;
   UIObjects.currentAudio.load();
 
-  UIObjects.trackList.children[previousTrackIndex].classList.remove("active");
+  for (const child of UIObjects.trackList.children) {
+    child.classList.remove("active");
+  }
   UIObjects.trackList.children[currentTrackIndex].classList.add("active");
 
   UIObjects.currentTrackArt.src = trackImage;

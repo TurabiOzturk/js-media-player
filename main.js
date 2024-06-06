@@ -33,7 +33,12 @@ document.querySelector("#app").innerHTML = `
   <div class="total-duration">00:00</div>
 </div>
 <div class="slider_container">
-  <i class="fa fa-volume-down"></i>
+<!-- Following i elements change when hovered over
+ search for :hover::before in style.css if you want to
+ make any changes -->
+  <i class="bi bi-hand-thumbs-up"></i>
+  <i class="bi bi-hand-thumbs-down"></i>
+  <i id="volume-mute-icon" class="fa fa-volume-down"></i>
   <input
     type="range"
     min="0"f
@@ -42,15 +47,14 @@ document.querySelector("#app").innerHTML = `
     class="volume_slider"
   />
   <i class="fa fa-volume-up"></i>
-  <!-- Following i elements change when hovered over
- search for :hover::before in style.css if you want to
- make any changes -->
-  <i class="bi bi-hand-thumbs-up"></i>
-  <i class="bi bi-hand-thumbs-down"></i>
+  
   <div class="shuffle-button">
     <i class="fas fa-random shuffle-icon"></i>
 </div>
 
+<div class="repeat-button">
+<i class="fa repeat-icon"></i>
+</div>
   <!-- <i class="bi bi-hand-thumbs-up-fill"></i>
   <i class="bi bi-hand-thumbs-down-fill"></i> -->
 </div>
