@@ -1,0 +1,160 @@
+{
+  "playlists": [
+    {
+      "listName": "Soul & RnB",
+      "playlistCoverImage": "https://images.pexels.com/photos/6579069/pexels-photo-6579069.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "tracks": [
+        {
+          "name": "Bouncer Bliss",
+          "artist": "Ketsa",
+          "image": "https://images.pexels.com/photos/1493755/pexels-photo-1493755.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/sOcQhiYuABb2HRuPM0Bpc8vyMEetRbcsCigysOnB.mp3",
+          "trackPage": "https://freemusicarchive.org/music/Ketsa/fresh-starts/bouncer-bliss",
+          "artistPage": "https://freemusicarchive.org/music/Ketsa",
+          "isActive": true,
+          "displayOrder": 1
+        },
+        {
+          "name": "Soul Father",
+          "artist": "DJ Messagroove",
+          "image": "https://images.pexels.com/photos/3379275/pexels-photo-3379275.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/XbBFhb7jN0c1XuudDKOz6a4wKJCVeFEnwXyfGnIE.mp3",
+          "trackPage": "https://freemusicarchive.org/music/dj-messagroove/single/soul-father/",
+          "artistPage": "https://freemusicarchive.org/music/dj-messagroove",
+          "isActive": true,
+          "displayOrder": 2
+        },
+        {
+          "name": "Neutral",
+          "artist": "A. Cooper",
+          "image": "https://images.pexels.com/photos/4273440/pexels-photo-4273440.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/cQ0DDJXvilMcNztLb0seTtKH1HZzJ6x4kYe5M6q3.mp3",
+          "trackPage": "https://freemusicarchive.org/music/a-cooper/the-anthony-cooper-abm-v/neutral/",
+          "artistPage": "https://freemusicarchive.org/music/a-cooper",
+          "isActive": true,
+          "displayOrder": 3
+        },
+        {
+          "name": "Petals Full of Rain",
+          "artist": "Maestro One",
+          "image": "https://images.pexels.com/photos/985266/pexels-photo-985266.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/3goCwpoFxO2FuUdWwnZTAoJYCXC6PlRgQlLmsYeE.mp3",
+          "trackPage": "https://freemusicarchive.org/music/james-dee/single/petals-full-of-rain/",
+          "artistPage": "https://freemusicarchive.org/music/james-dee",
+          "isActive": true,
+          "displayOrder": 4
+        },
+
+        {
+          "name": "Lullaby disco",
+          "artist": "Jean Toba",
+          "image": "https://images.pexels.com/photos/7270010/pexels-photo-7270010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/fJds9XBzkrvifhtBu4lve7yaXzXib5xS5ksXHWL5.mp3",
+          "trackPage": "https://freemusicarchive.org/music/jean-toba/on-the-rocks/lullaby-disco/",
+          "artistPage": "https://freemusicarchive.org/music/jean-toba",
+          "isActive": true,
+          "displayOrder": 5
+        }
+      ]
+    },
+    {
+      "listName": "First List",
+      "playlistCoverImage": "https://images.pexels.com/photos/1666021/pexels-photo-1666021.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "tracks": [
+        {
+          "name": "Night Owl",
+          "artist": "Broke For Free",
+          "image": "https://images.pexels.com/photos/2264753/pexels-photo-2264753.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
+          "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/WFMU/Broke_For_Free/Directionless_EP/Broke_For_Free_-_01_-_Night_Owl.mp3",
+          "isActive": true,
+          "displayOrder": 2
+        },
+        {
+          "name": "Enthusiast",
+          "artist": "Tours",
+          "image": "https://images.pexels.com/photos/3100835/pexels-photo-3100835.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
+          "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3",
+          "isActive": true,
+          "displayOrder": 1
+        },
+        {
+          "name": "Shipping Lanes",
+          "artist": "Chad Crouch",
+          "image": "https://images.pexels.com/photos/1717969/pexels-photo-1717969.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
+          "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Shipping_Lanes.mp3"
+        },
+        {
+          "name": "Dusty Chords",
+          "artist": "Rafael Archangel",
+          "image": "https://images.pexels.com/photos/165263/pexels-photo-165263.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Rafael_Archangel/Library_Music_Vol1/Rafael_Archangel_-_04_-_Dusty_Chords.mp3"
+        },
+        {
+          "name": "Beautiful Geometry",
+          "artist": "Phish Funk",
+          "image": "https://images.pexels.com/photos/2311713/pexels-photo-2311713.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/Toucan_Music/Phish_Funk/Best_Bytes_Volume_4/Phish_Funk_-_19_-_Beautiful_Geometry.mp3"
+        }
+      ]
+    },
+    {
+      "listName": "Electronic",
+      "playlistCoverImage": "https://images.pexels.com/photos/14275488/pexels-photo-14275488.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "tracks": [
+        {
+          "name": "Deep Breathing",
+          "artist": "Denys Kyshchuk",
+          "image": "https://images.pexels.com/photos/18346856/pexels-photo-18346856/free-photo-of-kadin-bina-duvar-ayakta.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/Nsrz7485t6yPGAn0VkrHHIcrHK99ce5dmVTRAmeD.mp3",
+          "trackPage": "https://freemusicarchive.org/music/denys-kyshchuk/space-journey/deep-breathing/",
+          "artistPage": "https://freemusicarchive.org/music/denys-kyshchuk",
+          "isActive": true,
+          "displayOrder": 1
+        },
+        {
+          "name": "For the Poor",
+          "artist": "Dan Brasco",
+          "image": "https://images.pexels.com/photos/2718645/pexels-photo-2718645.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Dan_Brasco/Two-Tier_Society/Dan_Brasco_-_01_-_For_the_Poor.mp3",
+          "trackPage": "https://freemusicarchive.org/music/Dan_Brasco/Two-Tier_Society/01_For_the_Poor/",
+          "artistPage": "https://freemusicarchive.org/music/Dan_Brasco",
+          "isActive": true,
+          "displayOrder": 2
+        },
+        {
+          "name": "Bit's Bit",
+          "artist": "Blamstrain",
+          "image": "https://images.pexels.com/photos/16378105/pexels-photo-16378105/free-photo-of-kadin-parti-teknoloji-kulup.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/INQ_Mag/Blamstrain/Red_Green_Blue/Blamstrain_-_04_-_Bits_Bit.mp3",
+          "trackPage": "https://freemusicarchive.org/music/Blamstrain/Red_Green_Blue/04_Bits_Bit/",
+          "artistPage": "https://freemusicarchive.org/music/Blamstrain",
+          "isActive": true,
+          "displayOrder": 3
+        },
+        {
+          "name": "Ice",
+          "artist": "Cellar Dweller",
+          "image": "https://images.pexels.com/photos/8634146/pexels-photo-8634146.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Cellar_Dweller/Monochrome_Rainbow/Cellar_Dweller_-_03_-_Ice.mp3",
+          "trackPage": "https://freemusicarchive.org/music/Cellar_Dweller/Monochrome_Rainbow/03_Ice/",
+          "artistPage": "https://freemusicarchive.org/music/Cellar_Dweller",
+          "isActive": true,
+          "displayOrder": 4
+        },
+
+        {
+          "name": "Sign",
+          "artist": "E-Shine",
+          "image": "https://images.pexels.com/photos/12053647/pexels-photo-12053647.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/E-Shine/Variant/E-Shine_-_02_-_Sign.mp3",
+          "trackPage": "https://freemusicarchive.org/music/E-Shine/Variant/02_-_E-Shine_-_Sign/",
+          "artistPage": "https://freemusicarchive.org/music/E-Shine",
+          "isActive": true,
+          "displayOrder": 5
+        }
+      ]
+    }
+  ]
+}
+
+

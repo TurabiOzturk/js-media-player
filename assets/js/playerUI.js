@@ -18,8 +18,11 @@ export const UIObjects = {
   shuffleIcon: document.querySelector(".shuffle-icon"),
   muteIcon: document.getElementById("volume-mute-icon"),
   repeatButton: document.querySelector(".repeat-button"),
-  repeatIcon: document.querySelector(".repeat-icon"),
+  repeatIcon: document.getElementById("repeat-icon"),
 };
+
+
+
 
 export const addTrackToUI = (trackName, trackArtist, trackImage) => {
   const listItem = document.createElement("li");
@@ -46,7 +49,8 @@ export const loadTrackToUI = (
   trackName,
   trackPath,
   trackImage,
-  trackArtist
+  trackArtist,
+  playlistName
 ) => {
   UIObjects.currentAudio.src = trackPath;
   UIObjects.currentAudio.load();
@@ -60,39 +64,39 @@ export const loadTrackToUI = (
   document.querySelector(".track-name").textContent = trackName;
   document.querySelector(".track-artist").textContent = trackArtist;
   document.querySelector(".now-playing").textContent =
-    "PLAYING " + (currentTrackIndex + 1) + " OF " + tracksCount;
+    "PLAYING " + (currentTrackIndex + 1) + " OF " + tracksCount + " IN " + playlistName;
 };
 
-export const refreshBackground = () => {
-  if (UIObjects.currentTrackArt.complete) {
-    colorArray = colorThief.getPalette(UIObjects.currentTrackArt);
-    applyGradient(colorArray); // Apply gradient if colors are ready
-  } else {
-    UIObjects.currentTrackArt.addEventListener("load", function () {
+export const backgroundUI = {
+  refreshBackground: () => {
+    if (UIObjects.currentTrackArt.complete) {
       colorArray = colorThief.getPalette(UIObjects.currentTrackArt);
-      applyGradient(colorArray); // Apply gradient after image loads
-    });
-  }
-};
-
-function applyGradient(colors) {
-  if (!colors) return;
-
-  const gradient = generateGradientString(colors);
-  document.body.style.cssText = `background: ${gradient};`;
-}
-
-function generateGradientString(colors) {
-  const randomAngle = Math.floor(Math.random() * 181);
-
-  let gradientString = `linear-gradient(${randomAngle + "deg"}, `; // Change "to right" for a different direction
-  for (let i = 0; i < colors.length; i++) {
-    const rgbString = `rgb(${colors[i][0]}, ${colors[i][1]}, ${colors[i][2]})`;
-    gradientString += rgbString;
-    if (i < colors.length - 1) {
-      gradientString += ", ";
+      backgroundUI.applyGradient(colorArray); // Apply gradient if colors are ready
+    } else {
+      UIObjects.currentTrackArt.addEventListener("load", function () {
+        colorArray = colorThief.getPalette(UIObjects.currentTrackArt);
+        backgroundUI.applyGradient(colorArray); // Apply gradient after image loads
+      });
     }
-  }
-  gradientString += ")";
-  return gradientString;
-}
+  },
+  applyGradient: (colors) => {
+    if (!colors) return;
+
+    const gradient = backgroundUI.generateGradientString(colors);
+    document.body.style.cssText = `background: ${gradient};`;
+  },
+  generateGradientString: (colors) => {
+    const randomAngle = Math.floor(Math.random() * 181);
+
+    let gradientString = `linear-gradient(${randomAngle + "deg"}, `;
+    for (let i = 0; i < colors.length; i++) {
+      const rgbString = `rgb(${colors[i][0]}, ${colors[i][1]}, ${colors[i][2]})`;
+      gradientString += rgbString;
+      if (i < colors.length - 1) {
+        gradientString += ", ";
+      }
+    }
+    gradientString += ")";
+    return gradientString;
+  },
+};

@@ -1,13 +1,43 @@
 Todo:
+v1: // data sourcing == database
+- list playlists and let user to select which playlist they want to listen
+- load first playlist on initial load
+- make sure all functionality works as is
+- let user to pick playlist
 
+v2:
+- give ability to enable/disable tracks in playlist in data.json, only enabled tracks should show up on UI (data structuring)
+- Allow tracks to be sorted on data.json and on Ui (sorting algorithms)
+
+v3:
+- datayi api dan cek (api json kullanacak)
+
+v4:
+- api datayi veritabanindan cekecek
+
+v5:
+- playlist ve trackleri admin panelinden yonet
+ (auth, jwt tokenlar)
+
+
+var arr = [4,2,3,1,6,8]
+
+ordered
+var arr = [1,2,3,4,6,8]
+
+SELECT * FROM table ORDER BY displayORDER ASC
 
 TODO:
 
+
+- add hyperlinks to the track and artist page
+- maybe add albums? and parse albums entirely?
+- figure out licensing
+- Add rating for songs 1-5 > need to pull songs from JSON first
+
 - media queries
 - scroll bar style
-- Add rating for songs 1-5 > need to pull songs from JSON first
 - Log how many times each song have been played
-- Add repeat option for song & playlist
 - Browse different playlists.
     - load different playlists.
 - Mute/unmute
@@ -21,6 +51,8 @@ Project TODO:
 
 
 DONE: 
+- define a function to reset the playlist properly ✅
+- Add repeat option for song & playlist ✅
 
 - Reset track if current seconds is > 5 ✅
 - onload background showing weird ✅
@@ -37,4 +69,6 @@ DONE:
 - Parse the dominant color of the pic ✅
     - set dominant color as background color using colorThief ✅
 - Add shuffle option ✅
+
+
 

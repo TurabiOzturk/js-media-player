@@ -1,10 +1,12 @@
-import { tracks } from "./tracks";
+import data from "./data.json";
 import {
   addTrackToUI,
   loadTrackToUI,
-  refreshBackground,
+  backgroundUI,
   UIObjects,
-} from "./ui";
+} from "./playerUI";
+
+import { playlistMenuUIObjects, playlistMenu } from "./playlistMenu";
 
 const player = {
   isPlaying: false,
@@ -17,7 +19,6 @@ const player = {
     "repeat-all": { next: "no-repeat", iconClass: "repeat-all" },
   },
   currentRepeatState: "no-repeat",
-  nextRepeatState: "repeat-one",
   currentTrackIndex: 0,
   previousTrackIndex: 0,
   nextTrackIndex: 1,
@@ -43,15 +44,15 @@ const player = {
     UIObjects.currentAudio.play();
     player.isPlaying = true;
     UIObjects.playPauseButton.innerHTML =
-      '<i class="fa fa-pause-circle fa-5x"></i>';
+      '<i class="fa fa-pause-circle fa-2x"></i>';
   },
   pause: () => {
     UIObjects.currentAudio.pause();
     player.isPlaying = false;
     UIObjects.playPauseButton.innerHTML =
-      '<i class="fa fa-play-circle fa-5x"></i>';
+      '<i class="fa fa-play-circle fa-2x"></i>';
   },
-  load: (trackIdx) => {
+  load: (trackIdx, playlistIdx) => {
     clearInterval(updateTimer);
     player.reset();
     loadTrackToUI(
@@ -61,17 +62,16 @@ const player = {
       player.tracks[trackIdx].name,
       player.tracks[trackIdx].path,
       player.tracks[trackIdx].image,
-      player.tracks[trackIdx].artist
+      player.tracks[trackIdx].artist,
+      data.playlists[playlistIdx].listName 
     );
 
     updateTimer = setInterval(player.updateProgressBar, 1000);
-    refreshBackground();
+    backgroundUI.refreshBackground();
   },
   playNext: () => {
     if (player.isShuffling) {
       player.currentTrackIndex = player.shuffleNextTrack(); // Directly update currentTrackIndex
-    } else if (player.isRepeat) {
-      player.currentTrackIndex = player.currentTrackIndex;
     } else {
       player.currentTrackIndex =
         (player.currentTrackIndex + 1) % player.playbackArray.length; // Increment and wrap around
@@ -84,10 +84,48 @@ const player = {
     player.load(player.currentTrackIndex);
     player.play();
   },
+  restartPlayList: () => {
+    player.currentTrackIndex = 0;
+    player.previousTrackIndex = 4;
+    player.nextTrackIndex = 1;
+    player.load(player.currentTrackIndex);
+    player.play();
+  },
+  trackEnded: () => {
+    //TODO: if repeat-all and repeat-one is false, stop playback at the last track
+    // is this another else if case or another nested if/else statement?
+
+    /*
+    no-repeat: continue on next song, normal behavior
+    repeat-one: loop current song forever
+    repeat-all: if its the last song then go back to first song in playlist
+    */
+
+    if (player.currentRepeatState == "repeat-one") {
+      player.load(player.currentTrackIndex);
+      player.play();
+
+      return;
+    }
+
+    if (
+      (player.currentRepeatState =
+        "repeat-all" && player.currentTrackIndex == player.maxValue)
+    ) {
+      player.restartPlayList();
+
+      return;
+    }
+
+    // if it reaches here that means its no-repeat
+    player.currentTrackIndex == player.maxValue
+      ? player.playPauseTrack()
+      : player.playNext();
+  },
   playPrevious: () => {
-    let getTrackProgress = UIObjects.currentAudio.currentTime;
-    console.log(getTrackProgress);
-    getTrackProgress >= 1 && getTrackProgress <= 5
+    let currentTrackProgress = UIObjects.currentAudio.currentTime;
+
+    currentTrackProgress >= 1 && currentTrackProgress <= 5
       ? (player.currentTrackIndex = player.currentTrackIndex)
       : // Update currentTrackIndex first
         (player.currentTrackIndex =
@@ -103,7 +141,6 @@ const player = {
   },
   setVolume: (volume) => {
     UIObjects.currentAudio.volume = UIObjects.volumeSlider.value / 100;
-    console.log(UIObjects.currentAudio.volume);
     UIObjects.currentAudio.volume <= 0.001
       ? UIObjects.muteIcon.classList.add("fa-volume-mute")
       : UIObjects.muteIcon.classList.remove("fa-volume-mute");
@@ -186,9 +223,10 @@ const player = {
       player.play();
     }
   },
-  generatePlaylist: () => {
+  generatePlaylist: (e) => {
     if (player.tracks.length === 0) {
-      player.tracks = tracks; // put tracks into player object
+      e = 0;
+      player.tracks = data.playlists[e].tracks; // TODO: fetch proper playlist put tracks into player object
 
       for (let i = 0; i < player.tracks.length; i++) {
         addTrackToUI(
@@ -197,19 +235,43 @@ const player = {
           player.tracks[i].image
         );
       }
-    } else {
+
+    } 
+    else {
+      UIObjects.trackList.innerHTML = ""; // Clear the UI
       console.log(
-        "There is already a list of " + player.tracks.length + " songs!"
+        "Refreshing playlist, the new list is:",
+        data.playlists[e].listName,
+        "and it has",
+        data.playlists[e].tracks.length,
+        "tracks."
       );
-      return false;
+
+      player.tracks = data.playlists[e].tracks; // TODO: fetch proper playlist put tracks into player object
+
+      for (let i = 0; i < player.tracks.length; i++) {
+        addTrackToUI(
+          player.tracks[i].name,
+          player.tracks[i].artist,
+          player.tracks[i].image
+        );
+      }
     }
+    player.load(player.currentTrackIndex, e);
+
+  },
+  clickPlaylistMenu: (e) => {
+    let clickedIndex = Array.from(
+      playlistMenuUIObjects.playlistList.children
+    ).indexOf(e.target);
+    player.generatePlaylist(clickedIndex);
+    return clickedIndex;
   },
   initializePlayer: () => {
-    player.generatePlaylist();
+    player.generatePlaylist(0);
     player.maxValue = player.tracks.length - 1;
     player.createPlaybackArray(player.maxValue, player.playbackArray);
     player.previousTrackIndex = player.maxValue;
-    player.load(player.currentTrackIndex);
   },
   toggleShuffle: () => {
     player.isShuffling = !player.isShuffling; // Toggle the shuffle state
@@ -222,7 +284,6 @@ const player = {
       // Add your logic to return to normal playback here
     }
   },
-  //IN PROGRESS > TODO: FIX IT
   updateRepeatButtonIcon: (current, next) => {
     UIObjects.repeatIcon.classList.remove(
       //Object.values(player.repeatStates).map((state) => state.iconClass)
@@ -232,17 +293,12 @@ const player = {
   },
   toggleRepeat: () => {
     // Transition to the next state
-    player.nextRepeatState =
-      player.repeatStates[player.currentRepeatState].next;
 
+    const nextRepeatState = player.repeatStates[player.currentRepeatState].next;
     // Update repeat icon
-    player.updateRepeatButtonIcon(player.currentRepeatState, player.nextRepeatState);
+    player.updateRepeatButtonIcon(player.currentRepeatState, nextRepeatState);
     // Switch current state with the updated state
-    player.currentRepeatState = player.nextRepeatState;
-
-    // Update the next state
-    player.nextRepeatState = player.repeatStates[player.currentRepeatState].next;
-    console.log(player.currentRepeatState, player.nextRepeatState);
+    player.currentRepeatState = nextRepeatState;
   },
 };
 
@@ -256,9 +312,10 @@ UIObjects.previousButton.addEventListener("click", player.playPrevious);
 UIObjects.seekSlider.addEventListener("change", player.setProgressBar);
 UIObjects.volumeSlider.addEventListener("input", player.setVolume);
 UIObjects.trackList.addEventListener("click", player.playFromList);
-UIObjects.currentAudio.addEventListener("ended", player.playNext);
+UIObjects.currentAudio.addEventListener("ended", player.trackEnded);
 UIObjects.shuffleButton.addEventListener("click", player.toggleShuffle);
 UIObjects.repeatButton.addEventListener("click", player.toggleRepeat);
+playlistMenuUIObjects.playlistList.addEventListener("click",playlistMenu.clickPlaylistMenu);
 
 //play/pause with the space bar
 let isSpaceBarCooldown = false;
