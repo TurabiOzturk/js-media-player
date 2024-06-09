@@ -1,13 +1,13 @@
 Todo:
 v1: // data sourcing == database
-- list playlists and let user to select which playlist they want to listen
-- load first playlist on initial load
-- make sure all functionality works as is
-- let user to pick playlist
+- list playlists and let user to select which playlist they want to listen ✅
+- load first playlist on initial load ✅
+- make sure all functionality works as is ✅
+- let user to pick playlist ✅
 
 v2:
-- give ability to enable/disable tracks in playlist in data.json, only enabled tracks should show up on UI (data structuring)
-- Allow tracks to be sorted on data.json and on Ui (sorting algorithms)
+- give ability to enable/disable tracks in playlist in data.json, only enabled tracks should show up on UI (data structuring) ✅
+- Allow tracks to be sorted on data.json and on Ui (sorting algorithms) ✅
 
 v3:
 - datayi api dan cek (api json kullanacak)

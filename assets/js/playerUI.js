@@ -49,8 +49,7 @@ export const loadTrackToUI = (
   trackName,
   trackPath,
   trackImage,
-  trackArtist,
-  playlistName
+  trackArtist
 ) => {
   UIObjects.currentAudio.src = trackPath;
   UIObjects.currentAudio.load();
@@ -64,7 +63,7 @@ export const loadTrackToUI = (
   document.querySelector(".track-name").textContent = trackName;
   document.querySelector(".track-artist").textContent = trackArtist;
   document.querySelector(".now-playing").textContent =
-    "PLAYING " + (currentTrackIndex + 1) + " OF " + tracksCount + " IN " + playlistName;
+    "PLAYING " + (currentTrackIndex + 1) + " OF " + tracksCount;
 };
 
 export const backgroundUI = {

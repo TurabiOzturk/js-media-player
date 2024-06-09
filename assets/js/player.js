@@ -9,6 +9,7 @@ import {
 import { playlistMenuUIObjects, playlistMenu } from "./playlistMenu";
 
 const player = {
+  currentPlaylist: 0,
   isPlaying: false,
   isShuffling: false,
   repeatState: 0,
@@ -52,7 +53,7 @@ const player = {
     UIObjects.playPauseButton.innerHTML =
       '<i class="fa fa-play-circle fa-2x"></i>';
   },
-  load: (trackIdx, playlistIdx) => {
+  load: (trackIdx) => {
     clearInterval(updateTimer);
     player.reset();
     loadTrackToUI(
@@ -62,8 +63,7 @@ const player = {
       player.tracks[trackIdx].name,
       player.tracks[trackIdx].path,
       player.tracks[trackIdx].image,
-      player.tracks[trackIdx].artist,
-      data.playlists[playlistIdx].listName 
+      player.tracks[trackIdx].artist
     );
 
     updateTimer = setInterval(player.updateProgressBar, 1000);
@@ -224,48 +224,39 @@ const player = {
     }
   },
   generatePlaylist: (e) => {
-    if (player.tracks.length === 0) {
-      e = 0;
-      player.tracks = data.playlists[e].tracks; // TODO: fetch proper playlist put tracks into player object
-
-      for (let i = 0; i < player.tracks.length; i++) {
+    UIObjects.trackList.innerHTML = "";
+    player.tracks = data.playlists[player.currentPlaylist].tracks; // TODO: fetch proper playlist put tracks into player object
+    const sortedTracks = player.tracks.sort(
+      (a, b) => a.displayOrder - b.displayOrder
+    );
+    for (let i = 0; i < sortedTracks.length; i++) {
+      if (sortedTracks[i].isActive) {
         addTrackToUI(
-          player.tracks[i].name,
-          player.tracks[i].artist,
-          player.tracks[i].image
-        );
-      }
-
-    } 
-    else {
-      UIObjects.trackList.innerHTML = ""; // Clear the UI
-      console.log(
-        "Refreshing playlist, the new list is:",
-        data.playlists[e].listName,
-        "and it has",
-        data.playlists[e].tracks.length,
-        "tracks."
-      );
-
-      player.tracks = data.playlists[e].tracks; // TODO: fetch proper playlist put tracks into player object
-
-      for (let i = 0; i < player.tracks.length; i++) {
-        addTrackToUI(
-          player.tracks[i].name,
-          player.tracks[i].artist,
-          player.tracks[i].image
+          sortedTracks[i].name,
+          sortedTracks[i].artist,
+          sortedTracks[i].image
         );
       }
     }
-    player.load(player.currentTrackIndex, e);
-
+    player.load(player.currentTrackIndex);
   },
   clickPlaylistMenu: (e) => {
     let clickedIndex = Array.from(
       playlistMenuUIObjects.playlistList.children
     ).indexOf(e.target);
-    player.generatePlaylist(clickedIndex);
-    return clickedIndex;
+    if (clickedIndex === -1) return;
+    else if (clickedIndex === player.currentPlaylist) return;
+    console.log("asd");
+
+    for (const child of playlistMenuUIObjects.playlistList.children) {
+      child.classList.remove("activePlaylist");
+    }
+    playlistMenuUIObjects.playlistList.children[clickedIndex].classList.add(
+      "activePlaylist"
+    );
+
+    player.currentPlaylist = clickedIndex;
+    player.generatePlaylist(player.currentPlaylist);
   },
   initializePlayer: () => {
     player.generatePlaylist(0);
@@ -315,7 +306,11 @@ UIObjects.trackList.addEventListener("click", player.playFromList);
 UIObjects.currentAudio.addEventListener("ended", player.trackEnded);
 UIObjects.shuffleButton.addEventListener("click", player.toggleShuffle);
 UIObjects.repeatButton.addEventListener("click", player.toggleRepeat);
-playlistMenuUIObjects.playlistList.addEventListener("click",playlistMenu.clickPlaylistMenu);
+playlistMenuUIObjects.playlistList.addEventListener(
+  "click",
+  player.clickPlaylistMenu
+);
+playlistMenuUIObjects.playlistList.children[0].classList.add("activePlaylist");
 
 //play/pause with the space bar
 let isSpaceBarCooldown = false;

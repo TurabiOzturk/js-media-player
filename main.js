@@ -61,13 +61,11 @@ document.querySelector("#app").innerHTML = `
     <i class="bi bi-hand-thumbs-down-fill"></i> -->
   </div>
   </div>
-  <div class="container mt-5">
-  <div class="row">
+  <div class="playlistContainer">
     <div class="col" id="playlist-scroll">
       <ul id="track-list">
         <!-- dynamically created in JS -->
       </ul>
-    </div>
   </div>
   </div>
 

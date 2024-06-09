@@ -21,7 +21,7 @@
           "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/XbBFhb7jN0c1XuudDKOz6a4wKJCVeFEnwXyfGnIE.mp3",
           "trackPage": "https://freemusicarchive.org/music/dj-messagroove/single/soul-father/",
           "artistPage": "https://freemusicarchive.org/music/dj-messagroove",
-          "isActive": true,
+          "isActive": false,
           "displayOrder": 2
         },
         {
@@ -31,8 +31,8 @@
           "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/cQ0DDJXvilMcNztLb0seTtKH1HZzJ6x4kYe5M6q3.mp3",
           "trackPage": "https://freemusicarchive.org/music/a-cooper/the-anthony-cooper-abm-v/neutral/",
           "artistPage": "https://freemusicarchive.org/music/a-cooper",
-          "isActive": true,
-          "displayOrder": 3
+          "isActive": false,
+          "displayOrder": 5
         },
         {
           "name": "Petals Full of Rain",
@@ -53,7 +53,7 @@
           "trackPage": "https://freemusicarchive.org/music/jean-toba/on-the-rocks/lullaby-disco/",
           "artistPage": "https://freemusicarchive.org/music/jean-toba",
           "isActive": true,
-          "displayOrder": 5
+          "displayOrder": 3
         }
       ]
     },
@@ -81,19 +81,27 @@
           "name": "Shipping Lanes",
           "artist": "Chad Crouch",
           "image": "https://images.pexels.com/photos/1717969/pexels-photo-1717969.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
-          "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Shipping_Lanes.mp3"
+          "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Shipping_Lanes.mp3",
+          "isActive": true,
+          "displayOrder": 4
+
         },
         {
           "name": "Dusty Chords",
           "artist": "Rafael Archangel",
           "image": "https://images.pexels.com/photos/165263/pexels-photo-165263.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-          "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Rafael_Archangel/Library_Music_Vol1/Rafael_Archangel_-_04_-_Dusty_Chords.mp3"
+          "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Rafael_Archangel/Library_Music_Vol1/Rafael_Archangel_-_04_-_Dusty_Chords.mp3",
+          "isActive": true,
+          "displayOrder": 5
+
         },
         {
           "name": "Beautiful Geometry",
           "artist": "Phish Funk",
           "image": "https://images.pexels.com/photos/2311713/pexels-photo-2311713.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-          "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/Toucan_Music/Phish_Funk/Best_Bytes_Volume_4/Phish_Funk_-_19_-_Beautiful_Geometry.mp3"
+          "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/Toucan_Music/Phish_Funk/Best_Bytes_Volume_4/Phish_Funk_-_19_-_Beautiful_Geometry.mp3",
+          "isActive": true,
+          "displayOrder": 3
         }
       ]
     },
@@ -119,7 +127,7 @@
           "trackPage": "https://freemusicarchive.org/music/Dan_Brasco/Two-Tier_Society/01_For_the_Poor/",
           "artistPage": "https://freemusicarchive.org/music/Dan_Brasco",
           "isActive": true,
-          "displayOrder": 2
+          "displayOrder": 3
         },
         {
           "name": "Bit's Bit",
@@ -129,7 +137,7 @@
           "trackPage": "https://freemusicarchive.org/music/Blamstrain/Red_Green_Blue/04_Bits_Bit/",
           "artistPage": "https://freemusicarchive.org/music/Blamstrain",
           "isActive": true,
-          "displayOrder": 3
+          "displayOrder": 2
         },
         {
           "name": "Ice",
@@ -139,7 +147,7 @@
           "trackPage": "https://freemusicarchive.org/music/Cellar_Dweller/Monochrome_Rainbow/03_Ice/",
           "artistPage": "https://freemusicarchive.org/music/Cellar_Dweller",
           "isActive": true,
-          "displayOrder": 4
+          "displayOrder": 5
         },
 
         {
@@ -150,7 +158,7 @@
           "trackPage": "https://freemusicarchive.org/music/E-Shine/Variant/02_-_E-Shine_-_Sign/",
           "artistPage": "https://freemusicarchive.org/music/E-Shine",
           "isActive": true,
-          "displayOrder": 5
+          "displayOrder": 4
         }
       ]
     }
