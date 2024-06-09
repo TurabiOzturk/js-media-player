@@ -63,9 +63,13 @@ const player = {
       player.tracks[trackIdx].name,
       player.tracks[trackIdx].path,
       player.tracks[trackIdx].image,
-      player.tracks[trackIdx].artist
+      player.tracks[trackIdx].artist,
+      player.tracks[trackIdx].likes,
+      player.tracks[trackIdx].dislikes,
+      player.tracks[trackIdx].listenCount
     );
 
+    player.tracks[trackIdx].listenCount++;
     updateTimer = setInterval(player.updateProgressBar, 1000);
     backgroundUI.refreshBackground();
   },
@@ -234,7 +238,8 @@ const player = {
         addTrackToUI(
           sortedTracks[i].name,
           sortedTracks[i].artist,
-          sortedTracks[i].image
+          sortedTracks[i].image,
+          sortedTracks[i].listenCount
         );
       }
     }
@@ -291,6 +296,50 @@ const player = {
     // Switch current state with the updated state
     player.currentRepeatState = nextRepeatState;
   },
+  // likeTrack: () => {
+  //   let track = player.tracks[player.currentTrackIndex];
+  //   if (track.isLiked) {
+  //     console.log(track.isLiked);
+
+  //     track.likes--;
+  //     UIObjects.thumbsUp.classList.remove("bi-hand-thumbs-up-fill");
+  //     UIObjects.thumbsUp.classList.add("bi-hand-thumbs-up");
+  //     UIObjects.thumbsDown.classList.remove("bi-hand-thumbs-up-fill");
+
+  //   } else {
+  //     track.likes++;
+  //     UIObjects.thumbsUp.classList.remove("bi-hand-thumbs-up");
+  //     UIObjects.thumbsUp.classList.add("bi-hand-thumbs-up-fill");
+  //   }
+  //   track.isLiked = !track.isLiked;
+  //   UIObjects.likesCount.textContent = track.likes;
+  // },
+  // dislikeTrack: () => {
+  //   let track = player.tracks[player.currentTrackIndex];
+  //   console.log(track.isLiked);
+  //   if (track.isLiked) {
+  //     console.log("dislike");
+  //     track.dislikes--;
+  //     UIObjects.thumbsDown.classList.remove("bi-hand-thumbs-down-fill");
+  //     UIObjects.thumbsDown.classList.add("bi-hand-thumbs-down");
+  //   } else {
+  //     track.dislikes++;
+  //     UIObjects.thumbsDown.classList.remove("bi-hand-thumbs-down");
+  //     UIObjects.thumbsDown.classList.add("bi-hand-thumbs-down-fill");
+  //   }
+  //   track.isLiked = !track.isLiked;
+  //   UIObjects.dislikesCount.textContent = track.likes;
+  // },
+  // toggleLikeDislike: (e) => {
+  //   const track = player.tracks[player.currentTrackIndex];
+  //   const clickedItemId = e.target.id;
+  //   console.log(clickedItemId);
+  //   if (clickedItemId === "thumbsUp") {
+  //     player.likeTrack();
+  //   } else if (clickedItemId === "thumbsDown") {
+  //     player.dislikeTrack();
+  //   }
+  // },
 };
 
 let updateTimer;
@@ -306,6 +355,8 @@ UIObjects.trackList.addEventListener("click", player.playFromList);
 UIObjects.currentAudio.addEventListener("ended", player.trackEnded);
 UIObjects.shuffleButton.addEventListener("click", player.toggleShuffle);
 UIObjects.repeatButton.addEventListener("click", player.toggleRepeat);
+// UIObjects.thumbsUp.addEventListener("click", player.toggleLikeDislike);
+// UIObjects.thumbsDown.addEventListener("click", player.toggleLikeDislike);
 playlistMenuUIObjects.playlistList.addEventListener(
   "click",
   player.clickPlaylistMenu

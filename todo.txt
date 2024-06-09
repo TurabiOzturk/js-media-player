@@ -27,19 +27,20 @@ var arr = [1,2,3,4,6,8]
 
 SELECT * FROM table ORDER BY displayORDER ASC
 
+FIXME:
+
+- playerUI.js:54 Uncaught (in promise) DOMException: The play() request was interrupted by a new load request.
+
 TODO:
 
+- Log how many times each song have been played ✅
+- Add like/dislike count 
 
 - add hyperlinks to the track and artist page
-- maybe add albums? and parse albums entirely?
 - figure out licensing
-- Add rating for songs 1-5 > need to pull songs from JSON first
 
 - media queries
 - scroll bar style
-- Log how many times each song have been played
-- Browse different playlists.
-    - load different playlists.
 - Mute/unmute
 
 

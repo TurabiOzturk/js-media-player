@@ -19,6 +19,10 @@ export const UIObjects = {
   muteIcon: document.getElementById("volume-mute-icon"),
   repeatButton: document.querySelector(".repeat-button"),
   repeatIcon: document.getElementById("repeat-icon"),
+  likesCount: document.getElementById("likesCount"),
+  dislikesCount: document.getElementById("dislikesCount"),
+  thumbsUp: document.getElementById("thumbsUp"),
+  thumbsDown: document.getElementById("thumbsDown"),
 };
 
 
@@ -49,7 +53,10 @@ export const loadTrackToUI = (
   trackName,
   trackPath,
   trackImage,
-  trackArtist
+  trackArtist,
+  trackLikes,
+  trackDislikes,
+  trackListens
 ) => {
   UIObjects.currentAudio.src = trackPath;
   UIObjects.currentAudio.load();
@@ -63,7 +70,9 @@ export const loadTrackToUI = (
   document.querySelector(".track-name").textContent = trackName;
   document.querySelector(".track-artist").textContent = trackArtist;
   document.querySelector(".now-playing").textContent =
-    "PLAYING " + (currentTrackIndex + 1) + " OF " + tracksCount;
+    "PLAYING " + (currentTrackIndex + 1) + " OF " + tracksCount + " - " + trackListens + " listens";
+    UIObjects.likesCount.textContent = trackLikes;
+    UIObjects.dislikesCount.textContent = trackDislikes;
 };
 
 export const backgroundUI = {

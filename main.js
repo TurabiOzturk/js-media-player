@@ -38,8 +38,10 @@ document.querySelector("#app").innerHTML = `
   <!-- Following i elements change when hovered over
    search for :hover::before in style.css if you want to
    make any changes -->
-    <i class="bi bi-hand-thumbs-up"></i>
-    <i class="bi bi-hand-thumbs-down"></i>
+    <i class="bi bi-hand-thumbs-up" id="thumbsUp"></i>
+    <span id="likesCount"></span>
+    <i class="bi bi-hand-thumbs-down"id="thumbsDown"></i>
+    <span id="dislikesCount"></span>
     <i id="volume-mute-icon" class="fa fa-volume-down"></i>
     <input
       type="range"
@@ -59,6 +61,7 @@ document.querySelector("#app").innerHTML = `
   </div>
     <!-- <i class="bi bi-hand-thumbs-up-fill"></i>
     <i class="bi bi-hand-thumbs-down-fill"></i> -->
+   
   </div>
   </div>
   <div class="playlistContainer">

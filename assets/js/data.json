@@ -12,7 +12,11 @@
           "trackPage": "https://freemusicarchive.org/music/Ketsa/fresh-starts/bouncer-bliss",
           "artistPage": "https://freemusicarchive.org/music/Ketsa",
           "isActive": true,
-          "displayOrder": 1
+          "displayOrder": 1,
+          "listenCount": 0,
+          "likes": 0,
+          "dislikes": 2,
+          "isLiked": false
         },
         {
           "name": "Soul Father",
@@ -22,7 +26,11 @@
           "trackPage": "https://freemusicarchive.org/music/dj-messagroove/single/soul-father/",
           "artistPage": "https://freemusicarchive.org/music/dj-messagroove",
           "isActive": false,
-          "displayOrder": 2
+          "displayOrder": 2,
+          "listenCount": 2,
+          "likes": 0,
+          "dislikes": 0,
+          "isLiked": false
         },
         {
           "name": "Neutral",
@@ -32,7 +40,11 @@
           "trackPage": "https://freemusicarchive.org/music/a-cooper/the-anthony-cooper-abm-v/neutral/",
           "artistPage": "https://freemusicarchive.org/music/a-cooper",
           "isActive": false,
-          "displayOrder": 5
+          "displayOrder": 5,
+          "listenCount": 4,
+          "likes": 0,
+          "dislikes": 0,
+          "isLiked": false
         },
         {
           "name": "Petals Full of Rain",
@@ -42,7 +54,11 @@
           "trackPage": "https://freemusicarchive.org/music/james-dee/single/petals-full-of-rain/",
           "artistPage": "https://freemusicarchive.org/music/james-dee",
           "isActive": true,
-          "displayOrder": 4
+          "displayOrder": 4,
+          "listenCount": 3,
+          "likes": 0,
+          "dislikes": 0,
+          "isLiked": false
         },
 
         {
@@ -53,7 +69,11 @@
           "trackPage": "https://freemusicarchive.org/music/jean-toba/on-the-rocks/lullaby-disco/",
           "artistPage": "https://freemusicarchive.org/music/jean-toba",
           "isActive": true,
-          "displayOrder": 3
+          "displayOrder": 3,
+          "listenCount": 8,
+          "likes": 0,
+          "dislikes": 0,
+          "isLiked": false
         }
       ]
     },
@@ -67,7 +87,11 @@
           "image": "https://images.pexels.com/photos/2264753/pexels-photo-2264753.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
           "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/WFMU/Broke_For_Free/Directionless_EP/Broke_For_Free_-_01_-_Night_Owl.mp3",
           "isActive": true,
-          "displayOrder": 2
+          "displayOrder": 2,
+          "listenCount": 8,
+          "likes": 0,
+          "dislikes": 0,
+          "isLiked": false
         },
         {
           "name": "Enthusiast",
@@ -75,7 +99,11 @@
           "image": "https://images.pexels.com/photos/3100835/pexels-photo-3100835.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
           "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3",
           "isActive": true,
-          "displayOrder": 1
+          "displayOrder": 1,
+          "listenCount": 8,
+          "likes": 0,
+          "dislikes": 0,
+          "isLiked": false
         },
         {
           "name": "Shipping Lanes",
@@ -83,8 +111,11 @@
           "image": "https://images.pexels.com/photos/1717969/pexels-photo-1717969.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
           "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Shipping_Lanes.mp3",
           "isActive": true,
-          "displayOrder": 4
-
+          "displayOrder": 4,
+          "listenCount": 8,
+          "likes": 0,
+          "dislikes": 0,
+          "isLiked": false
         },
         {
           "name": "Dusty Chords",
@@ -92,8 +123,11 @@
           "image": "https://images.pexels.com/photos/165263/pexels-photo-165263.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
           "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Rafael_Archangel/Library_Music_Vol1/Rafael_Archangel_-_04_-_Dusty_Chords.mp3",
           "isActive": true,
-          "displayOrder": 5
-
+          "displayOrder": 5,
+          "listenCount": 8,
+          "likes": 0,
+          "dislikes": 0,
+          "isLiked": false
         },
         {
           "name": "Beautiful Geometry",
@@ -101,7 +135,11 @@
           "image": "https://images.pexels.com/photos/2311713/pexels-photo-2311713.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
           "path": "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/Toucan_Music/Phish_Funk/Best_Bytes_Volume_4/Phish_Funk_-_19_-_Beautiful_Geometry.mp3",
           "isActive": true,
-          "displayOrder": 3
+          "displayOrder": 3,
+          "listenCount": 8,
+          "likes": 0,
+          "dislikes": 0,
+          "isLiked": false
         }
       ]
     },
@@ -117,7 +155,11 @@
           "trackPage": "https://freemusicarchive.org/music/denys-kyshchuk/space-journey/deep-breathing/",
           "artistPage": "https://freemusicarchive.org/music/denys-kyshchuk",
           "isActive": true,
-          "displayOrder": 1
+          "displayOrder": 1,
+          "listenCount": 8,
+          "likes": 0,
+          "dislikes": 0,
+          "isLiked": false
         },
         {
           "name": "For the Poor",
@@ -127,7 +169,11 @@
           "trackPage": "https://freemusicarchive.org/music/Dan_Brasco/Two-Tier_Society/01_For_the_Poor/",
           "artistPage": "https://freemusicarchive.org/music/Dan_Brasco",
           "isActive": true,
-          "displayOrder": 3
+          "displayOrder": 3,
+          "listenCount": 8,
+          "likes": 0,
+          "dislikes": 0,
+          "isLiked": false
         },
         {
           "name": "Bit's Bit",
@@ -137,7 +183,11 @@
           "trackPage": "https://freemusicarchive.org/music/Blamstrain/Red_Green_Blue/04_Bits_Bit/",
           "artistPage": "https://freemusicarchive.org/music/Blamstrain",
           "isActive": true,
-          "displayOrder": 2
+          "displayOrder": 2,
+          "listenCount": 8,
+          "likes": 0,
+          "dislikes": 0,
+          "isLiked": false
         },
         {
           "name": "Ice",
@@ -147,7 +197,11 @@
           "trackPage": "https://freemusicarchive.org/music/Cellar_Dweller/Monochrome_Rainbow/03_Ice/",
           "artistPage": "https://freemusicarchive.org/music/Cellar_Dweller",
           "isActive": true,
-          "displayOrder": 5
+          "displayOrder": 5,
+          "listenCount": 8,
+          "likes": 0,
+          "dislikes": 0,
+          "isLiked": false
         },
 
         {
@@ -158,7 +212,11 @@
           "trackPage": "https://freemusicarchive.org/music/E-Shine/Variant/02_-_E-Shine_-_Sign/",
           "artistPage": "https://freemusicarchive.org/music/E-Shine",
           "isActive": true,
-          "displayOrder": 4
+          "displayOrder": 4,
+          "listenCount": 8,
+          "likes": 0,
+          "dislikes": 0,
+          "isLiked": false
         }
       ]
     }
