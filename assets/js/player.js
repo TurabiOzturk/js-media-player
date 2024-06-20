@@ -251,8 +251,7 @@ const player = {
     ).indexOf(e.target);
     if (clickedIndex === -1) return;
     else if (clickedIndex === player.currentPlaylist) return;
-    console.log("asd");
-
+    
     for (const child of playlistMenuUIObjects.playlistList.children) {
       child.classList.remove("activePlaylist");
     }
@@ -357,10 +356,7 @@ UIObjects.shuffleButton.addEventListener("click", player.toggleShuffle);
 UIObjects.repeatButton.addEventListener("click", player.toggleRepeat);
 // UIObjects.thumbsUp.addEventListener("click", player.toggleLikeDislike);
 // UIObjects.thumbsDown.addEventListener("click", player.toggleLikeDislike);
-playlistMenuUIObjects.playlistList.addEventListener(
-  "click",
-  player.clickPlaylistMenu
-);
+playlistMenuUIObjects.playlistList.addEventListener("click",player.clickPlaylistMenu);
 playlistMenuUIObjects.playlistList.children[0].classList.add("activePlaylist");
 
 //play/pause with the space bar
