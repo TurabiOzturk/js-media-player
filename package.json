@@ -6,12 +6,22 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "api": "node ./api/index.js"
   },
   "devDependencies": {
     "vite": "^5.2.0"
   },
   "dependencies": {
-    "colorthief": "^2.4.0"
-  }
+    "axios": "^1.7.2",
+    "body-parser": "^1.20.2",
+    "colorthief": "^2.4.0",
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  },
+  "description": "A simple media player application built with HTML, CSS, and JavaScript, using Vite as a build tool and development server.",
+  "main": "main.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

@@ -1,4 +1,5 @@
-import data from "./data.json";
+import axios from "axios";
+
 import {
   addTrackToUI,
   loadTrackToUI,
@@ -227,9 +228,12 @@ const player = {
       player.play();
     }
   },
-  generatePlaylist: (e) => {
+  generatePlaylist: async (e) => {
     UIObjects.trackList.innerHTML = "";
-    player.tracks = data.playlists[player.currentPlaylist].tracks; // TODO: fetch proper playlist put tracks into player object
+    //player.tracks = data.playlists[player.currentPlaylist].tracks; // TODO: fetch proper playlist put tracks into player object
+    const response = await axios.get(`http://localhost:3001/playlists/${player.currentPlaylist}`);
+    console.log(player.currentPlaylist);
+    player.tracks = response.data.tracks;
     const sortedTracks = player.tracks.sort(
       (a, b) => a.displayOrder - b.displayOrder
     );
@@ -251,7 +255,7 @@ const player = {
     ).indexOf(e.target);
     if (clickedIndex === -1) return;
     else if (clickedIndex === player.currentPlaylist) return;
-    
+
     for (const child of playlistMenuUIObjects.playlistList.children) {
       child.classList.remove("activePlaylist");
     }
@@ -260,6 +264,7 @@ const player = {
     );
 
     player.currentPlaylist = clickedIndex;
+    console.log(player.currentPlaylist);
     player.generatePlaylist(player.currentPlaylist);
   },
   initializePlayer: () => {
@@ -356,8 +361,12 @@ UIObjects.shuffleButton.addEventListener("click", player.toggleShuffle);
 UIObjects.repeatButton.addEventListener("click", player.toggleRepeat);
 // UIObjects.thumbsUp.addEventListener("click", player.toggleLikeDislike);
 // UIObjects.thumbsDown.addEventListener("click", player.toggleLikeDislike);
-playlistMenuUIObjects.playlistList.addEventListener("click",player.clickPlaylistMenu);
-playlistMenuUIObjects.playlistList.children[0].classList.add("activePlaylist");
+playlistMenuUIObjects.playlistList.addEventListener(
+  "click",
+  player.clickPlaylistMenu
+);
+//FIXME: this is supposed to be async
+//playlistMenuUIObjects.playlistList.children[0].classList.add("activePlaylist");
 
 //play/pause with the space bar
 let isSpaceBarCooldown = false;

@@ -1,4 +1,4 @@
-import data from "./data.json";
+import axios from "axios";
 
 export const playlistMenuUIObjects = {
   playlistList: document.getElementById("playlistList"),
@@ -24,14 +24,17 @@ export const playlistMenu = {
 
     playlistMenuUIObjects.playlistList.appendChild(listItem);
   },
-  generatePlaylistMenu: () => {
+  generatePlaylistMenu: async () => {
     if (playlistMenu.playlists.length === 0) {
-      playlistMenu.playlists = data.playlists;
+      const response = await axios.get("http://localhost:3001/playlists");
+      playlistMenu.playlists = response.data;
+    
+      //const response = await axios.get(`http://localhost:3001/playlists/${listIdDegiskeni}`);
 
       for (let i = 0; i < playlistMenu.playlists.length; i++) {
         playlistMenu.addPlaylistToUI(
           playlistMenu.playlists[i].listName,
-          playlistMenu.playlists[i].playlistCoverImage,
+          playlistMenu.playlists[i].coverImage
         );
       }
     } else {
@@ -43,10 +46,6 @@ export const playlistMenu = {
       return false;
     }
   },
-
 };
 
-
 playlistMenu.generatePlaylistMenu();
-
-
